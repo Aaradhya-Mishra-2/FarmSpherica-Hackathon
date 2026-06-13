@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Live Stats — Farmspherica</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="stats.css" />
+  <link rel="stylesheet" href="mobile.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+</head>
+<body>
+
+  <header class="site-header" id="site-header">
+    <nav class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="nav-logo-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17 8C8 10 5.9 16.17 3.82 20.82L5.71 21.5C5.96 20.97 6.23 20.43 6.5 19.91C7.44 20.58 8.5 21 9.5 21C13.5 21 15.5 17.5 17.5 14C18.5 12.27 20 9.5 22 8.5C20.93 7.83 18.79 7.65 17 8Z"/>
+            <path d="M2 2C2 2 2 8 6 10C9.5 11.73 11 9 11 9C11 9 9 6 6 4L2 2Z" opacity="0.7"/>
+          </svg>
+        </div>
+        Farm<span>spherica</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="crops.html">Crops</a></li>
+        <li><a href="stats.html" class="active">Stats</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode"></button>
+        <a href="dashboard.html" class="btn btn-primary">Open Dashboard</a>
+      </div>
+      <button class="nav-hamburger" id="navHamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <nav class="nav-mobile" id="navMobile">
+    <a href="index.html">Home</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="crops.html">Crops</a>
+    <a href="stats.html">Stats</a>
+    <a href="about.html">About</a>
+  </nav>
+
+  <main>
+
+    <section class="page-hero">
+      <div class="container">
+        <div class="page-hero-inner">
+          <span class="badge reveal"><span class="dot"></span> Live grow room data</span>
+          <h1 class="display-lg page-hero-title reveal delay-1">Real-time stats across<br><span class="accent-text">every crop in the system</span></h1>
+          <p class="body-lg page-hero-sub reveal delay-2">A live overview of all 17 crops growing right now — categories, growth progress, and a continuous feed from the sensor network.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="stats-section">
+      <div class="container">
+
+        <!-- Overview cards -->
+        <div class="stats-overview">
+          <div class="overview-card glass-card reveal delay-1">
+            <div class="overview-icon">🌱</div>
+            <div class="overview-num"><span id="stat-total-crops" data-count="0">0</span></div>
+            <div class="overview-label">Crops actively growing</div>
+          </div>
+          <div class="overview-card glass-card reveal delay-2">
+            <div class="overview-icon">📈</div>
+            <div class="overview-num"><span id="stat-avg-progress" data-count="0" data-suffix="%">0</span></div>
+            <div class="overview-label">Average growth progress</div>
+          </div>
+          <div class="overview-card glass-card reveal delay-3">
+            <div class="overview-icon">🧺</div>
+            <div class="overview-num"><span id="stat-near-harvest" data-count="0">0</span></div>
+            <div class="overview-label">Near harvest (80%+)</div>
+          </div>
+          <div class="overview-card glass-card reveal delay-4">
+            <div class="overview-icon">🗂️</div>
+            <div class="overview-num"><span id="stat-categories" data-count="0">0</span></div>
+            <div class="overview-label">Crop categories tracked</div>
+          </div>
+        </div>
+
+        <!-- Chart + Live feed -->
+        <div class="stats-grid">
+          <div class="panel glass-card reveal-left">
+            <div class="panel-header">
+              <span class="panel-title">Crops by category</span>
+            </div>
+            <div class="chart-wrap" id="category-chart"></div>
+          </div>
+
+          <div class="panel glass-card reveal-right">
+            <div class="panel-header">
+              <span class="panel-title">Live monitoring feed</span>
+              <span class="live-pulse-pill"><span class="status-dot"></span> Live</span>
+            </div>
+            <div class="live-feed" id="live-feed"></div>
+          </div>
+        </div>
+
+        <!-- Crop performance table -->
+        <div class="panel glass-card reveal">
+          <div class="panel-header">
+            <span class="panel-title">Crop growth progress</span>
+            <span class="body-sm" id="last-refreshed">Last updated</span>
+          </div>
+          <div class="crop-table-wrap">
+            <table class="crop-table">
+              <thead>
+                <tr>
+                  <th>Crop</th>
+                  <th>Category</th>
+                  <th>Grow Time</th>
+                  <th>Difficulty</th>
+                  <th>Progress</th>
+                </tr>
+              </thead>
+              <tbody id="crop-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-band reveal-scale">
+          <div class="cta-band-text">
+            <h2 class="cta-band-title">Want the full control panel?</h2>
+            <p class="cta-band-sub">Jump into the dashboard to adjust nutrients, pH, and lighting live.</p>
+          </div>
+          <a href="dashboard.html" class="btn-cta-white">Open Dashboard →</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <div class="footer-logo-icon">
+              <svg viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 20.82L5.71 21.5C5.96 20.97 6.23 20.43 6.5 19.91C7.44 20.58 8.5 21 9.5 21C13.5 21 15.5 17.5 17.5 14C18.5 12.27 20 9.5 22 8.5C20.93 7.83 18.79 7.65 17 8Z"/><path d="M2 2C2 2 2 8 6 10C9.5 11.73 11 9 11 9C11 9 9 6 6 4L2 2Z" opacity="0.7"/></svg>
+            </div>
+            Farm<span style="color:var(--accent)">spherica</span>
+          </div>
+          <p class="footer-tagline">Precision hydroponic monitoring for the next generation of urban farmers. Grow anywhere, harvest always.</p>
+          <div class="footer-socials">
+            <a class="social-btn" href="#" aria-label="Twitter">𝕏</a>
+            <a class="social-btn" href="#" aria-label="Instagram">📷</a>
+            <a class="social-btn" href="#" aria-label="LinkedIn">in</a>
+          </div>
+        </div>
+        <div>
+          <p class="footer-col-title">Pages</p>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="crops.html">Crops</a></li>
+            <li><a href="stats.html">Stats</a></li>
+            <li><a href="about.html">About</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer-col-title">Features</p>
+          <ul class="footer-links">
+            <li><a href="dashboard.html">Live Monitoring</a></li>
+            <li><a href="dashboard.html">pH Tracking</a></li>
+            <li><a href="dashboard.html">EC Levels</a></li>
+            <li><a href="stats.html">Water Savings</a></li>
+            <li><a href="crops.html">Crop Catalog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer-col-title">Company</p>
+          <ul class="footer-links">
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="about.html#faq">FAQ</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2025 Farmspherica. Built for The Founders' Web Hackathon.</p>
+        <p class="footer-copy" style="color: var(--accent);">🌿 Growing the future, one sensor at a time.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="auth.js"></script>
+  <script src="app.js"></script>
+  <script src="stats.js"></script>
+</body>
+</html>

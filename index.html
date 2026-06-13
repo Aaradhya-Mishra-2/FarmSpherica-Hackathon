@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Farmspherica — Smart Hydroponic Farming</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="mobile.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+</head>
+<body>
+
+  <!-- ═══════════════ HEADER ═══════════════ -->
+
+<header class="site-header" id="site-header">
+  <nav class="nav-inner">
+
+    <!-- Logo -->
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17 8C8 10 5.9 16.17 3.82 20.82L5.71 21.5C5.96 20.97 6.23 20.43 6.5 19.91C7.44 20.58 8.5 21 9.5 21C13.5 21 15.5 17.5 17.5 14C18.5 12.27 20 9.5 22 8.5C20.93 7.83 18.79 7.65 17 8Z"/>
+          <path d="M2 2C2 2 2 8 6 10C9.5 11.73 11 9 11 9C11 9 9 6 6 4L2 2Z" opacity="0.7"/>
+        </svg>
+      </div>
+      Farm<span>spherica</span>
+    </a>
+
+    <!-- Nav links -->
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="crops.html">Crops</a></li>
+      <li><a href="stats.html">Stats</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+
+    <!-- Actions: dark mode + login/user pill -->
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode"></button>
+
+      <!-- 
+        auth.js will REMOVE .nav-login-btn and INSERT .nav-user-pill
+        when a session exists. If not logged in, this button stays.
+      -->
+      <a href="login.html" class="btn btn-ghost nav-login-btn">Sign In</a>
+      <a href="login.html#signup" class="btn btn-primary nav-signup-btn">Get Started</a>
+    </div>
+
+    <button class="nav-hamburger" id="navHamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
+
+<!-- Mobile nav -->
+<nav class="nav-mobile" id="navMobile">
+  <a href="index.html">Home</a>
+  <a href="dashboard.html">Dashboard</a>
+  <a href="crops.html">Crops</a>
+  <a href="stats.html">Stats</a>
+  <a href="about.html">About</a>
+  <!-- auth.js appends Sign Out here when logged in -->
+  <div class="nav-mobile-divider"></div>
+  <a href="login.html" class="nav-mobile-login" id="navMobileLogin">Sign In</a>
+</nav>
+
+  <!-- Mobile nav -->
+  <nav class="nav-mobile" id="navMobile">
+    <a href="index.html">Home</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="crops.html">Crops</a>
+    <a href="stats.html">Stats</a>
+    <a href="about.html">About</a>
+  </nav>
+
+  <main>
+
+    <!-- ═══════════════ HERO ═══════════════ -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-inner">
+
+          <!-- Left: copy -->
+          <div class="hero-content">
+            <div class="hero-eyebrow reveal">
+              <span class="badge"><span class="dot"></span> Live monitoring active</span>
+            </div>
+
+            <div class="hero-headline">
+              <h1 class="display-xl reveal delay-1">
+                Grow smarter.<br>
+                <span class="line-green">Not harder.</span>
+              </h1>
+            </div>
+
+            <p class="body-lg reveal delay-2">
+              Farmspherica brings precision hydroponic farming to everyone — real-time sensor data, growth tracking, and crop insights in one clean dashboard.
+            </p>
+
+            <div class="hero-ctas reveal delay-3">
+              <a href="dashboard.html" class="btn btn-primary">View Dashboard →</a>
+              <a href="about.html" class="btn btn-ghost">Learn more</a>
+            </div>
+
+            <div class="hero-stats reveal delay-4">
+              <div class="hero-stat-item">
+                <span class="hero-stat-num" data-count="95">0</span>
+                <span class="hero-stat-label">% less water used</span>
+              </div>
+              <div class="hero-stat-item">
+                <span class="hero-stat-num" data-count="3">0</span>
+                <span class="hero-stat-label">× faster growth</span>
+              </div>
+              <div class="hero-stat-item">
+                <span class="hero-stat-num" data-count="365">0</span>
+                <span class="hero-stat-label">days a year harvest</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: glass card -->
+          <div class="hero-visual reveal-right delay-2">
+            <div class="hero-card-wrap">
+              <div class="float-badge float-badge-1">🌿 pH optimal 6.2</div>
+              <div class="float-badge float-badge-2">+24% yield this week</div>
+
+              <div class="hero-glass-card">
+                <div class="hero-card-header">
+                  <span class="hero-card-title">System Overview</span>
+                  <span class="status-pill">
+                    <span class="status-dot"></span> All systems nominal
+                  </span>
+                </div>
+
+                <div class="hero-mini-stats">
+                  <div class="mini-stat-card">
+                    <div class="mini-stat-label">Temperature</div>
+                    <div class="mini-stat-value">22<span class="mini-stat-unit">°C</span></div>
+                    <div class="mini-stat-delta">↑ Ideal range</div>
+                  </div>
+                  <div class="mini-stat-card">
+                    <div class="mini-stat-label">Humidity</div>
+                    <div class="mini-stat-value">68<span class="mini-stat-unit">%</span></div>
+                    <div class="mini-stat-delta">↑ Optimal</div>
+                  </div>
+                  <div class="mini-stat-card">
+                    <div class="mini-stat-label">EC Level</div>
+                    <div class="mini-stat-value">1.8<span class="mini-stat-unit">mS</span></div>
+                    <div class="mini-stat-delta">↔ Stable</div>
+                  </div>
+                  <div class="mini-stat-card">
+                    <div class="mini-stat-label">pH Level</div>
+                    <div class="mini-stat-value">6.2<span class="mini-stat-unit">pH</span></div>
+                    <div class="mini-stat-delta">↑ Perfect</div>
+                  </div>
+                </div>
+
+                <div class="plant-bars">
+                  <div class="plant-row">
+                    <span class="plant-name">Lettuce</span>
+                    <div class="plant-track"><div class="plant-fill" style="width:0%" data-width="82%"></div></div>
+                    <span class="plant-pct">82%</span>
+                  </div>
+                  <div class="plant-row">
+                    <span class="plant-name">Basil</span>
+                    <div class="plant-track"><div class="plant-fill" style="width:0%" data-width="67%"></div></div>
+                    <span class="plant-pct">67%</span>
+                  </div>
+                  <div class="plant-row">
+                    <span class="plant-name">Tomatoes</span>
+                    <div class="plant-track"><div class="plant-fill" style="width:0%" data-width="45%"></div></div>
+                    <span class="plant-pct">45%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ WHAT IS HYDROPONICS ═══════════════ -->
+    <section class="about-section">
+      <div class="container">
+        <div class="about-inner">
+
+          <div class="about-content">
+            <p class="label reveal">What we do</p>
+            <h2 class="display-lg reveal delay-1">Farming without<br>the soil.</h2>
+            <p class="body-lg reveal delay-2">
+              Hydroponics delivers nutrients directly to plant roots via water — no soil, no seasons, no uncertainty. Farmspherica adds a layer of intelligence on top: continuous monitoring so your crops never guess.
+            </p>
+
+            <div class="about-points">
+              <div class="about-point reveal delay-2">
+                <div class="about-point-icon">💧</div>
+                <div class="about-point-text">
+                  <span class="about-point-title">Water-smart by design</span>
+                  <span class="body-sm">Recirculating systems use up to 95% less water than traditional soil farming.</span>
+                </div>
+              </div>
+              <div class="about-point reveal delay-3">
+                <div class="about-point-icon">📡</div>
+                <div class="about-point-text">
+                  <span class="about-point-title">Always monitored</span>
+                  <span class="body-sm">pH, EC, temperature and humidity tracked in real time — alerts before problems grow.</span>
+                </div>
+              </div>
+              <div class="about-point reveal delay-4">
+                <div class="about-point-icon">🌍</div>
+                <div class="about-point-text">
+                  <span class="about-point-title">Grow anywhere</span>
+                  <span class="body-sm">Rooftop, basement, container, warehouse — location is no longer a constraint.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="about-visual reveal-right delay-1">
+            <div class="quote-card glass-card">
+              <div class="quote-mark">"</div>
+              <p class="quote-text">The farm of the future grows indoors, uses a fraction of the water, and ships food to the city in hours — not days.</p>
+              <p class="quote-author">— Anonymous</p>
+            </div>
+
+            <div class="stat-chips">
+              <div class="stat-chip reveal-scale delay-2">
+                <div class="stat-chip-num">95%</div>
+                <div class="stat-chip-label">Water saved</div>
+              </div>
+              <div class="stat-chip reveal-scale delay-3">
+                <div class="stat-chip-num">3×</div>
+                <div class="stat-chip-label">Faster growth</div>
+              </div>
+              <div class="stat-chip reveal-scale delay-4">
+                <div class="stat-chip-num">0</div>
+                <div class="stat-chip-label">Pesticides</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ HOW IT WORKS ═══════════════ -->
+    <section class="how-section">
+      <div class="container">
+        <div class="section-header">
+          <p class="label reveal">The process</p>
+          <h2 class="display-lg reveal delay-1">How Farmspherica works</h2>
+          <p class="body-lg reveal delay-2">Three steps from seed to harvest — all tracked, all optimised.</p>
+        </div>
+
+        <div class="steps-grid">
+          <div class="step-card glass-card reveal delay-1">
+            <div class="step-icon-wrap">🌱</div>
+            <span class="step-num">STEP 01</span>
+            <h3 class="step-title">Plant your crops</h3>
+            <p class="body-sm">Choose from 40+ supported hydroponic crops. Add them to your system and Farmspherica immediately starts building a personalised grow profile.</p>
+          </div>
+          <div class="step-card glass-card reveal delay-2">
+            <div class="step-icon-wrap">📊</div>
+            <span class="step-num">STEP 02</span>
+            <h3 class="step-title">Monitor in real time</h3>
+            <p class="body-sm">Sensors stream pH, EC, temperature and humidity to your dashboard every 30 seconds. Smart alerts flag anything outside optimal range immediately.</p>
+          </div>
+          <div class="step-card glass-card reveal delay-3">
+            <div class="step-icon-wrap">🚀</div>
+            <span class="step-num">STEP 03</span>
+            <h3 class="step-title">Harvest with confidence</h3>
+            <p class="body-sm">Progress bars show exact grow percentages per crop. You'll know harvest day before it arrives — and yield data builds over each cycle.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ BENEFITS ═══════════════ -->
+    <section class="benefits-section">
+      <div class="container">
+        <div class="section-header">
+          <p class="label reveal">Why Farmspherica</p>
+          <h2 class="display-lg reveal delay-1">Built for results, not just looks</h2>
+        </div>
+
+        <div class="benefits-grid">
+          <div class="benefit-card glass-card featured reveal">
+            <div class="benefit-icon">💧</div>
+            <div class="benefit-body">
+              <div class="benefit-big-num">95%</div>
+              <h3 class="benefit-title">Less water, more crop</h3>
+              <p class="body-sm">Our recirculating nutrient delivery system wastes almost nothing. Every drop is tracked, reused, and measured against crop output — giving you the world's most water-efficient farm.</p>
+            </div>
+          </div>
+
+          <div class="benefit-card glass-card reveal delay-1">
+            <div class="benefit-icon">⚡</div>
+            <div class="benefit-body">
+              <h3 class="benefit-title">3× faster growth cycles</h3>
+              <p class="body-sm">Optimised nutrient delivery and lighting mean crops hit harvest stage in a third of the time of soil farming.</p>
+            </div>
+          </div>
+
+          <div class="benefit-card glass-card reveal delay-2">
+            <div class="benefit-icon">🌍</div>
+            <div class="benefit-body">
+              <h3 class="benefit-title">Grow anywhere, any season</h3>
+              <p class="body-sm">No soil, no climate dependence. Whether you're in Bangalore or Reykjavik, your farm runs identically year-round.</p>
+            </div>
+          </div>
+
+          <div class="benefit-card glass-card reveal delay-3">
+            <div class="benefit-icon">🔬</div>
+            <div class="benefit-body">
+              <h3 class="benefit-title">Zero pesticides needed</h3>
+              <p class="body-sm">Controlled environments eliminate most pests and diseases. Your produce is cleaner — and so is your conscience.</p>
+            </div>
+          </div>
+
+          <div class="benefit-card glass-card reveal delay-4">
+            <div class="benefit-icon">📱</div>
+            <div class="benefit-body">
+              <h3 class="benefit-title">Dashboard in your pocket</h3>
+              <p class="body-sm">Every metric, every alert, every harvest prediction — accessible from any device, any time.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ TESTIMONIALS ═══════════════ -->
+    <section class="testimonials-section">
+      <div class="container">
+        <div class="section-header">
+          <p class="label reveal">Real growers</p>
+          <h2 class="display-lg reveal delay-1">What our farmers say</h2>
+        </div>
+
+        <div class="testimonials-grid">
+          <div class="testimonial-card glass-card reveal delay-1">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"I went from zero farming knowledge to harvesting 8kg of lettuce weekly in under two months. The dashboard made it impossible to get it wrong."</p>
+            <div class="testimonial-author">
+              <div class="author-avatar">RK</div>
+              <div>
+                <div class="author-name">Rahul K.</div>
+                <div class="author-role">Urban grower, Bangalore</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card glass-card reveal delay-2">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"The pH and EC alerts alone saved my entire first tomato crop. I caught a nutrient imbalance three days before it would have been fatal."</p>
+            <div class="testimonial-author">
+              <div class="author-avatar">SP</div>
+              <div>
+                <div class="author-name">Sneha P.</div>
+                <div class="author-role">Rooftop farmer, Mumbai</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card glass-card reveal delay-3">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"Running three grow towers now. Farmspherica's dashboard keeps all of them visible from one screen. Couldn't scale without it."</p>
+            <div class="testimonial-author">
+              <div class="author-avatar">AM</div>
+              <div>
+                <div class="author-name">Arun M.</div>
+                <div class="author-role">Commercial grower, Chennai</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ CTA BAND ═══════════════ -->
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-band reveal-scale">
+          <div class="cta-band-text">
+            <h2 class="cta-band-title">Ready to grow smarter?</h2>
+            <p class="cta-band-sub">Open the dashboard and see your farm come alive.</p>
+          </div>
+          <a href="dashboard.html" class="btn-cta-white">Go to Dashboard →</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <div class="footer-logo-icon">
+              <svg viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 20.82L5.71 21.5C5.96 20.97 6.23 20.43 6.5 19.91C7.44 20.58 8.5 21 9.5 21C13.5 21 15.5 17.5 17.5 14C18.5 12.27 20 9.5 22 8.5C20.93 7.83 18.79 7.65 17 8Z"/><path d="M2 2C2 2 2 8 6 10C9.5 11.73 11 9 11 9C11 9 9 6 6 4L2 2Z" opacity="0.7"/></svg>
+            </div>
+            Farm<span style="color:var(--accent)">spherica</span>
+          </div>
+          <p class="footer-tagline">Precision hydroponic monitoring for the next generation of urban farmers. Grow anywhere, harvest always.</p>
+          <div class="footer-socials">
+            <a class="social-btn" href="#" aria-label="Twitter">𝕏</a>
+            <a class="social-btn" href="#" aria-label="Instagram">📷</a>
+            <a class="social-btn" href="#" aria-label="LinkedIn">in</a>
+          </div>
+        </div>
+
+        <div>
+          <p class="footer-col-title">Pages</p>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="crops.html">Crops</a></li>
+            <li><a href="stats.html">Stats</a></li>
+            <li><a href="about.html">About</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="footer-col-title">Features</p>
+          <ul class="footer-links">
+            <li><a href="dashboard.html">Live Monitoring</a></li>
+            <li><a href="dashboard.html">pH Tracking</a></li>
+            <li><a href="dashboard.html">EC Levels</a></li>
+            <li><a href="stats.html">Water Savings</a></li>
+            <li><a href="crops.html">Crop Catalog</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="footer-col-title">Company</p>
+          <ul class="footer-links">
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="about.html#faq">FAQ</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2025 Farmspherica. Built for The Founders' Web Hackathon.</p>
+        <p class="footer-copy" style="color: var(--accent);">🌿 Growing the future, one sensor at a time.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="auth.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

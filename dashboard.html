@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — Farmspherica</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="mobile.css" />
+  <link rel="stylesheet" href="dashboard.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+</head>
+<body>
+
+  <!-- ═══════════════ HEADER ═══════════════ -->
+  <header class="site-header" id="site-header">
+    <nav class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="nav-logo-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17 8C8 10 5.9 16.17 3.82 20.82L5.71 21.5C5.96 20.97 6.23 20.43 6.5 19.91C7.44 20.58 8.5 21 9.5 21C13.5 21 15.5 17.5 17.5 14C18.5 12.27 20 9.5 22 8.5C20.93 7.83 18.79 7.65 17 8Z"/>
+            <path d="M2 2C2 2 2 8 6 10C9.5 11.73 11 9 11 9C11 9 9 6 6 4L2 2Z" opacity="0.7"/>
+          </svg>
+        </div>
+        Farm<span>spherica</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="dashboard.html" class="active">Dashboard</a></li>
+        <li><a href="crops.html">Crops</a></li>
+        <li><a href="stats.html">Stats</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode"></button>
+        <a href="login.html" class="btn btn-ghost nav-login-btn">Sign In</a>
+        <a href="login.html" class="btn btn-primary nav-signup-btn">Get Started</a>
+      </div>
+
+      <button class="nav-hamburger" id="navHamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <nav class="nav-mobile" id="navMobile">
+    <a href="index.html">Home</a>
+    <a href="dashboard.html" class="active">Dashboard</a>
+    <a href="crops.html">Crops</a>
+    <a href="stats.html">Stats</a>
+    <a href="about.html">About</a>
+    <div class="nav-mobile-divider"></div>
+    <a href="login.html" class="nav-mobile-login" id="navMobileLogin">Sign In</a>
+  </nav>
+
+  <main class="dash-main">
+
+    <!-- ═══════════════ DASH HEADER BAR ═══════════════ -->
+    <div class="dash-topbar">
+      <div class="dash-topbar-inner">
+        <div class="dash-topbar-left">
+          <div class="dash-greeting">
+            <h1 class="dash-title">Grow Monitor</h1>
+            <p class="dash-subtitle">System is running normally — all sensors active</p>
+          </div>
+        </div>
+        <div class="dash-topbar-right">
+          <div class="dash-clock-wrap glass-card">
+            <span class="dash-clock-label">Live</span>
+            <span class="dash-clock" id="live-clock">--:--:--</span>
+          </div>
+          <div class="dash-refresh glass-card">
+            <span class="dash-refresh-icon" id="refreshIcon">🔄</span>
+            <span id="last-refreshed">Updating…</span>
+          </div>
+          <button class="dash-alert-btn glass-card" id="alertToggleBtn" aria-label="View alerts">
+            🔔
+            <span class="alert-badge" id="alertBadge">2</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="dash-body">
+
+      <!-- ═══════════════ SYSTEM STATUS BANNER ═══════════════ -->
+      <div class="status-banner reveal" id="statusBanner">
+        <div class="status-banner-dot"></div>
+        <span class="status-banner-text" id="statusText">All systems nominal — nutrients balanced, temperature stable, pH in optimal range</span>
+        <button class="status-banner-close" id="bannerClose" aria-label="Dismiss">✕</button>
+      </div>
+
+      <!-- ═══════════════ STAT CARDS ROW ═══════════════ -->
+      <div class="stat-cards-grid">
+
+        <div class="stat-card glass-card reveal delay-1" data-status="good">
+          <div class="stat-card-top">
+            <div class="stat-card-icon">💧</div>
+            <div class="stat-card-trend trend-up" id="trend-ph">↑ Optimal</div>
+          </div>
+          <div class="stat-card-value">
+            <span class="stat-big" id="sensor-ph">6.2</span>
+            <span class="stat-unit">pH</span>
+          </div>
+          <div class="stat-card-label">pH Level</div>
+          <div class="stat-card-bar">
+            <div class="stat-bar-track">
+              <div class="stat-bar-fill" id="bar-ph" style="width:0%" data-width="74%"></div>
+            </div>
+            <span class="stat-bar-range">5.5 – 7.0</span>
+          </div>
+        </div>
+
+        <div class="stat-card glass-card reveal delay-2" data-status="good">
+          <div class="stat-card-top">
+            <div class="stat-card-icon">🌡</div>
+            <div class="stat-card-trend trend-up" id="trend-temp">↑ Ideal</div>
+          </div>
+          <div class="stat-card-value">
+            <span class="stat-big" id="sensor-temp">22.0</span>
+            <span class="stat-unit">°C</span>
+          </div>
+          <div class="stat-card-label">Temperature</div>
+          <div class="stat-card-bar">
+            <div class="stat-bar-track">
+              <div class="stat-bar-fill" id="bar-temp" style="width:0%" data-width="68%"></div>
+            </div>
+            <span class="stat-bar-range">18 – 28°C</span>
+          </div>
+        </div>
+
+        <div class="stat-card glass-card reveal delay-3" data-status="good">
+          <div class="stat-card-top">
+            <div class="stat-card-icon">⚡</div>
+            <div class="stat-card-trend trend-stable" id="trend-ec">↔ Stable</div>
+          </div>
+          <div class="stat-card-value">
+            <span class="stat-big" id="sensor-ec">1.8</span>
+            <span class="stat-unit">mS/cm</span>
+          </div>
+          <div class="stat-card-label">EC Level</div>
+          <div class="stat-card-bar">
+            <div class="stat-bar-track">
+              <div class="stat-bar-fill" id="bar-ec" style="width:0%" data-width="60%"></div>
+            </div>
+            <span class="stat-bar-range">1.4 – 2.4</span>
+          </div>
+        </div>
+
+        <div class="stat-card glass-card reveal delay-4" data-status="warn">
+          <div class="stat-card-top">
+            <div class="stat-card-icon">💨</div>
+            <div class="stat-card-trend trend-warn" id="trend-hum">⚠ High</div>
+          </div>
+          <div class="stat-card-value">
+            <span class="stat-big" id="sensor-hum">78</span>
+            <span class="stat-unit">%</span>
+          </div>
+          <div class="stat-card-label">Humidity</div>
+          <div class="stat-card-bar">
+            <div class="stat-bar-track">
+              <div class="stat-bar-fill warn" id="bar-hum" style="width:0%" data-width="88%"></div>
+            </div>
+            <span class="stat-bar-range">55 – 75%</span>
+          </div>
+        </div>
+
+        <div class="stat-card glass-card reveal delay-5" data-status="good">
+          <div class="stat-card-top">
+            <div class="stat-card-icon">💡</div>
+            <div class="stat-card-trend trend-up" id="trend-light">↑ On</div>
+          </div>
+          <div class="stat-card-value">
+            <span class="stat-big" id="sensor-light">14</span>
+            <span class="stat-unit">hrs</span>
+          </div>
+          <div class="stat-card-label">Light Cycle</div>
+          <div class="stat-card-bar">
+            <div class="stat-bar-track">
+              <div class="stat-bar-fill" id="bar-light" style="width:0%" data-width="58%"></div>
+            </div>
+            <span class="stat-bar-range">12 – 18 hrs</span>
+          </div>
+        </div>
+
+        <div class="stat-card glass-card reveal delay-6" data-status="good">
+          <div class="stat-card-top">
+            <div class="stat-card-icon">🌊</div>
+            <div class="stat-card-trend trend-up" id="trend-water">↑ Normal</div>
+          </div>
+          <div class="stat-card-value">
+            <span class="stat-big" id="sensor-water">2.4</span>
+            <span class="stat-unit">L/hr</span>
+          </div>
+          <div class="stat-card-label">Water Flow</div>
+          <div class="stat-card-bar">
+            <div class="stat-bar-track">
+              <div class="stat-bar-fill" id="bar-water" style="width:0%" data-width="48%"></div>
+            </div>
+            <span class="stat-bar-range">1.5 – 4.0 L/hr</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ═══════════════ MAIN GRID: CROPS + CHART + INSIGHTS ═══════════════ -->
+      <div class="dash-mid-grid">
+
+        <!-- PLANT GROWTH TRACKER -->
+        <div class="dash-panel glass-card reveal" id="plantPanel">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">Plant Growth</h2>
+              <p class="panel-sub">Current grow cycle — day 18 of 30</p>
+            </div>
+            <span class="badge"><span class="dot"></span> 6 active</span>
+          </div>
+
+          <div class="plant-list" id="plantList">
+
+            <div class="plant-item">
+              <div class="plant-item-info">
+                <span class="plant-item-emoji">🥬</span>
+                <div class="plant-item-text">
+                  <span class="plant-item-name">Butterhead Lettuce</span>
+                  <span class="plant-item-meta">Day 18 · Harvest in 12 days</span>
+                </div>
+              </div>
+              <div class="plant-item-right">
+                <span class="plant-item-pct">82%</span>
+                <div class="plant-progress-track">
+                  <div class="plant-progress-fill dash-bar-fill" data-width="82%"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="plant-item">
+              <div class="plant-item-info">
+                <span class="plant-item-emoji">🌿</span>
+                <div class="plant-item-text">
+                  <span class="plant-item-name">Sweet Basil</span>
+                  <span class="plant-item-meta">Day 14 · Harvest in 21 days</span>
+                </div>
+              </div>
+              <div class="plant-item-right">
+                <span class="plant-item-pct">67%</span>
+                <div class="plant-progress-track">
+                  <div class="plant-progress-fill dash-bar-fill" data-width="67%"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="plant-item">
+              <div class="plant-item-info">
+                <span class="plant-item-emoji">🍅</span>
+                <div class="plant-item-text">
+                  <span class="plant-item-name">Cherry Tomatoes</span>
+                  <span class="plant-item-meta">Day 45 · Harvest in 35 days</span>
+                </div>
+              </div>
+              <div class="plant-item-right">
+                <span class="plant-item-pct">56%</span>
+                <div class="plant-progress-track">
+                  <div class="plant-progress-fill dash-bar-fill" data-width="56%"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="plant-item">
+              <div class="plant-item-info">
+                <span class="plant-item-emoji">🍃</span>
+                <div class="plant-item-text">
+                  <span class="plant-item-name">Peppermint</span>
+                  <span class="plant-item-meta">Day 22 · Harvest in 18 days</span>
+                </div>
+              </div>
+              <div class="plant-item-right">
+                <span class="plant-item-pct">45%</span>
+                <div class="plant-progress-track">
+                  <div class="plant-progress-fill dash-bar-fill" data-width="45%"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="plant-item">
+              <div class="plant-item-info">
+                <span class="plant-item-emoji">🥒</span>
+                <div class="plant-item-text">
+                  <span class="plant-item-name">Cucumber</span>
+                  <span class="plant-item-meta">Day 28 · Harvest in 42 days</span>
+                </div>
+              </div>
+              <div class="plant-item-right">
+                <span class="plant-item-pct">38%</span>
+                <div class="plant-progress-track">
+                  <div class="plant-progress-fill dash-bar-fill" data-width="38%"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="plant-item">
+              <div class="plant-item-info">
+                <span class="plant-item-emoji">🌱</span>
+                <div class="plant-item-text">
+                  <span class="plant-item-name">Broccoli Microgreens</span>
+                  <span class="plant-item-meta">Day 4 · Harvest in 8 days</span>
+                </div>
+              </div>
+              <div class="plant-item-right">
+                <span class="plant-item-pct">33%</span>
+                <div class="plant-progress-track">
+                  <div class="plant-progress-fill dash-bar-fill" data-width="33%"></div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- SENSOR HISTORY CHART -->
+        <div class="dash-panel glass-card reveal delay-2" id="chartPanel">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">Sensor History</h2>
+              <p class="panel-sub">Last 7 readings</p>
+            </div>
+            <div class="chart-tabs">
+              <button class="chart-tab active" data-metric="ph">pH</button>
+              <button class="chart-tab" data-metric="temp">Temp</button>
+              <button class="chart-tab" data-metric="ec">EC</button>
+              <button class="chart-tab" data-metric="hum">Humidity</button>
+            </div>
+          </div>
+          <div class="chart-area">
+            <div class="chart-y-labels" id="chartYLabels"></div>
+            <div class="chart-bars-wrap">
+              <div class="chart-bars" id="chartBars"></div>
+              <div class="chart-x-labels" id="chartXLabels"></div>
+            </div>
+          </div>
+          <div class="chart-legend">
+            <span class="chart-legend-dot"></span>
+            <span class="chart-legend-label" id="chartLegendLabel">pH Level — optimal range 5.5 – 7.0</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ═══════════════ INSIGHTS + ALERTS ROW ═══════════════ -->
+      <div class="dash-bottom-grid">
+
+        <!-- INSIGHTS PANEL -->
+        <div class="dash-panel glass-card reveal" id="insightsPanel">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">Smart Insights</h2>
+              <p class="panel-sub">AI-generated recommendations</p>
+            </div>
+            <span class="insight-count-badge" id="insightCount">4 new</span>
+          </div>
+
+          <div class="insights-list" id="insightsList">
+
+            <div class="insight-item insight-warn reveal delay-1">
+              <div class="insight-icon">⚠️</div>
+              <div class="insight-body">
+                <p class="insight-title">Humidity above recommended range</p>
+                <p class="insight-desc">Current humidity at 78% — above the 75% ceiling. Increase ventilation or reduce misting frequency to prevent mould risk on Lettuce and Basil.</p>
+              </div>
+              <span class="insight-tag tag-warn">Action needed</span>
+            </div>
+
+            <div class="insight-item insight-good reveal delay-2">
+              <div class="insight-icon">✅</div>
+              <div class="insight-body">
+                <p class="insight-title">Lettuce on track for early harvest</p>
+                <p class="insight-desc">At 82% growth and current EC levels, Butterhead Lettuce could be ready 2 days ahead of schedule. Consider harvesting outer leaves now to increase airflow.</p>
+              </div>
+              <span class="insight-tag tag-good">On track</span>
+            </div>
+
+            <div class="insight-item insight-info reveal delay-3">
+              <div class="insight-icon">💡</div>
+              <div class="insight-body">
+                <p class="insight-title">Nutrient top-up due in ~3 days</p>
+                <p class="insight-desc">EC trending downward over past 48 hrs. Based on current consumption rate, plan a nutrient solution top-up within 72 hours to keep EC above 1.6.</p>
+              </div>
+              <span class="insight-tag tag-info">Upcoming</span>
+            </div>
+
+            <div class="insight-item insight-good reveal delay-4">
+              <div class="insight-icon">🚀</div>
+              <div class="insight-body">
+                <p class="insight-title">Tomatoes showing strong root development</p>
+                <p class="insight-desc">Root zone temperature and oxygen levels are optimal. Cherry Tomato root mass has expanded 18% this week — expect accelerated fruiting in the next 10 days.</p>
+              </div>
+              <span class="insight-tag tag-good">Thriving</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ALERTS + ACTIVITY PANEL -->
+        <div class="dash-panel glass-card reveal delay-2" id="alertsPanel">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">Recent Activity</h2>
+              <p class="panel-sub">System log — last 24 hours</p>
+            </div>
+            <button class="clear-log-btn" id="clearLogBtn">Clear</button>
+          </div>
+
+          <div class="activity-log" id="activityLog">
+
+            <div class="activity-item activity-warn">
+              <div class="activity-dot dot-warn"></div>
+              <div class="activity-body">
+                <p class="activity-text">Humidity exceeded 75% threshold</p>
+                <span class="activity-time">2 min ago</span>
+              </div>
+            </div>
+
+            <div class="activity-item activity-warn">
+              <div class="activity-dot dot-warn"></div>
+              <div class="activity-body">
+                <p class="activity-text">EC level dropped below 1.9 — monitor closely</p>
+                <span class="activity-time">18 min ago</span>
+              </div>
+            </div>
+
+            <div class="activity-item activity-good">
+              <div class="activity-dot dot-good"></div>
+              <div class="activity-body">
+                <p class="activity-text">pH auto-adjusted to 6.2 — within target range</p>
+                <span class="activity-time">1 hr ago</span>
+              </div>
+            </div>
+
+            <div class="activity-item activity-info">
+              <div class="activity-dot dot-info"></div>
+              <div class="activity-body">
+                <p class="activity-text">Light cycle started — 14 hr photoperiod active</p>
+                <span class="activity-time">6 hrs ago</span>
+              </div>
+            </div>
+
+            <div class="activity-item activity-good">
+              <div class="activity-dot dot-good"></div>
+              <div class="activity-body">
+                <p class="activity-text">Water pump running normally — 2.4 L/hr</p>
+                <span class="activity-time">6 hrs ago</span>
+              </div>
+            </div>
+
+            <div class="activity-item activity-good">
+              <div class="activity-dot dot-good"></div>
+              <div class="activity-body">
+                <p class="activity-text">Temperature stable at 22°C for 12+ hours</p>
+                <span class="activity-time">12 hrs ago</span>
+              </div>
+            </div>
+
+            <div class="activity-item activity-info">
+              <div class="activity-dot dot-info"></div>
+              <div class="activity-body">
+                <p class="activity-text">Daily nutrient dosage completed successfully</p>
+                <span class="activity-time">18 hrs ago</span>
+              </div>
+            </div>
+
+            <div class="activity-item activity-good">
+              <div class="activity-dot dot-good"></div>
+              <div class="activity-body">
+                <p class="activity-text">System health check passed — all sensors online</p>
+                <span class="activity-time">24 hrs ago</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- QUICK STATS PANEL -->
+        <div class="dash-panel glass-card reveal delay-3" id="quickStatsPanel">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">This Cycle</h2>
+              <p class="panel-sub">Performance since day 1</p>
+            </div>
+          </div>
+
+          <div class="quick-stats-grid">
+            <div class="quick-stat-item">
+              <span class="quick-stat-num" data-count="18">0</span>
+              <span class="quick-stat-label">Days running</span>
+            </div>
+            <div class="quick-stat-item">
+              <span class="quick-stat-num" data-count="6">0</span>
+              <span class="quick-stat-label">Active crops</span>
+            </div>
+            <div class="quick-stat-item">
+              <span class="quick-stat-num" data-count="94" data-suffix="%">0</span>
+              <span class="quick-stat-label">System uptime</span>
+            </div>
+            <div class="quick-stat-item">
+              <span class="quick-stat-num" data-count="12">0</span>
+              <span class="quick-stat-label">Litres saved vs soil</span>
+            </div>
+            <div class="quick-stat-item">
+              <span class="quick-stat-num" data-count="3">0</span>
+              <span class="quick-stat-label">Alerts resolved</span>
+            </div>
+            <div class="quick-stat-item">
+              <span class="quick-stat-num" data-count="31" data-suffix="°C">0</span>
+              <span class="quick-stat-label">Peak temperature</span>
+            </div>
+          </div>
+
+          <!-- Next harvest countdown -->
+          <div class="harvest-countdown glass">
+            <span class="harvest-icon">🥬</span>
+            <div class="harvest-text">
+              <p class="harvest-label">Next harvest</p>
+              <p class="harvest-crop">Butterhead Lettuce</p>
+            </div>
+            <div class="harvest-days">
+              <span class="harvest-num" id="harvestDays">12</span>
+              <span class="harvest-unit">days</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div><!-- /dash-body -->
+  </main>
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <div class="footer-logo-icon">
+              <svg viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 20.82L5.71 21.5C5.96 20.97 6.23 20.43 6.5 19.91C7.44 20.58 8.5 21 9.5 21C13.5 21 15.5 17.5 17.5 14C18.5 12.27 20 9.5 22 8.5C20.93 7.83 18.79 7.65 17 8Z"/><path d="M2 2C2 2 2 8 6 10C9.5 11.73 11 9 11 9C11 9 9 6 6 4L2 2Z" opacity="0.7"/></svg>
+            </div>
+            Farm<span style="color:var(--accent)">spherica</span>
+          </div>
+          <p class="footer-tagline">Precision hydroponic monitoring for the next generation of urban farmers.</p>
+          <div class="footer-socials">
+            <a class="social-btn" href="#">𝕏</a>
+            <a class="social-btn" href="#">📷</a>
+            <a class="social-btn" href="#">in</a>
+          </div>
+        </div>
+        <div>
+          <p class="footer-col-title">Pages</p>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="crops.html">Crops</a></li>
+            <li><a href="stats.html">Stats</a></li>
+            <li><a href="about.html">About</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer-col-title">Features</p>
+          <ul class="footer-links">
+            <li><a href="#">Live Monitoring</a></li>
+            <li><a href="#">pH Tracking</a></li>
+            <li><a href="#">EC Levels</a></li>
+            <li><a href="stats.html">Water Savings</a></li>
+            <li><a href="crops.html">Crop Catalog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer-col-title">Company</p>
+          <ul class="footer-links">
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="about.html#faq">FAQ</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2025 Farmspherica. Built for The Founders' Web Hackathon.</p>
+        <p class="footer-copy" style="color: var(--accent);">🌿 Growing the future, one sensor at a time.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="auth.js"></script>
+  <script src="app.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>

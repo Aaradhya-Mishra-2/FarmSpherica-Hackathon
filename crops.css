@@ -1,0 +1,410 @@
+/* ============================================================
+   FARMSPHERICA — crops.css
+   Page-specific styles for crops.html
+   Imports tokens from style.css
+   ============================================================ */
+
+/* ── HERO ── */
+.crops-hero {
+  padding-bottom: var(--space-xl);
+}
+
+.crops-search-wrap {
+  width: 100%;
+  max-width: 560px;
+  margin-top: var(--space-md);
+}
+
+.crops-search-box {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.1rem;
+  border-radius: var(--radius-full);
+  background: var(--glass-bg);
+  border: 1.5px solid var(--glass-border);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.crops-search-box:focus-within {
+  border-color: rgba(46, 125, 50, 0.4);
+  box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.08), var(--glass-shadow);
+}
+
+.search-icon {
+  font-size: 1rem;
+  flex-shrink: 0;
+  opacity: 0.6;
+}
+
+.crops-search-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  outline: none;
+  min-width: 0;
+}
+
+.crops-search-input::placeholder {
+  color: var(--text-muted);
+}
+
+.search-clear {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--bg-tertiary);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition);
+}
+
+.search-clear.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.search-clear:hover {
+  background: var(--border);
+  color: var(--text-primary);
+}
+
+/* ── FILTER ROW ── */
+.crops-section {
+  padding-top: var(--space-lg);
+  background: var(--bg);
+}
+
+.filter-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-lg);
+}
+
+.filter-tabs {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.filter-tab {
+  padding: 0.5rem 1.1rem;
+  border-radius: var(--radius-full);
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: var(--card-bg);
+  border: 1.5px solid var(--card-border);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  cursor: pointer;
+  transition: all var(--transition);
+  white-space: nowrap;
+}
+
+.filter-tab:hover {
+  border-color: rgba(46, 125, 50, 0.3);
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.filter-tab.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+  box-shadow: 0 4px 14px rgba(46, 125, 50, 0.3);
+}
+
+.crops-count {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.crops-count span {
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 1rem;
+}
+
+/* ── NO RESULTS ── */
+.no-results {
+  text-align: center;
+  padding: var(--space-3xl) 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.no-results-icon {
+  font-size: 3rem;
+  opacity: 0.5;
+}
+
+/* ── CROPS GRID ── */
+.crops-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-md);
+  padding-bottom: var(--space-xl);
+}
+
+/* ── CROP CARD ── */
+.crop-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+  cursor: default;
+}
+
+.crop-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 52px rgba(46, 125, 50, 0.14);
+  border-color: rgba(46, 125, 50, 0.25);
+}
+
+/* Card image area */
+.crop-card-img {
+  position: relative;
+  height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.crop-card-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.04));
+  pointer-events: none;
+}
+
+.crop-emoji {
+  font-size: 3.2rem;
+  z-index: 1;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.12));
+  transition: transform var(--transition);
+}
+
+.crop-card:hover .crop-emoji {
+  transform: scale(1.1) translateY(-3px);
+}
+
+/* Difficulty badges */
+.crop-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 0.28rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: 0.72rem;
+  font-weight: 700;
+  z-index: 2;
+  letter-spacing: 0.04em;
+}
+
+.crop-badge-easy {
+  background: rgba(76, 175, 80, 0.2);
+  color: var(--green-600);
+  border: 1px solid rgba(76, 175, 80, 0.3);
+}
+
+[data-theme="dark"] .crop-badge-easy {
+  background: rgba(76, 175, 80, 0.15);
+  color: var(--green-200);
+}
+
+.crop-badge-medium {
+  background: rgba(255, 152, 0, 0.15);
+  color: #e65100;
+  border: 1px solid rgba(255, 152, 0, 0.3);
+}
+
+[data-theme="dark"] .crop-badge-medium {
+  color: #ffb74d;
+}
+
+.crop-badge-hard {
+  background: rgba(244, 67, 54, 0.12);
+  color: #c62828;
+  border: 1px solid rgba(244, 67, 54, 0.2);
+}
+
+[data-theme="dark"] .crop-badge-hard {
+  color: #ef9a9a;
+}
+
+/* Card body */
+.crop-card-body {
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  flex: 1;
+}
+
+.crop-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.crop-name {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+}
+
+.crop-category-tag {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid rgba(46, 125, 50, 0.12);
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Meta row */
+.crop-meta {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.crop-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.meta-icon {
+  font-size: 0.82rem;
+}
+
+/* Description */
+.crop-desc {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  flex: 1;
+}
+
+/* Card footer */
+.crop-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.65rem;
+  border-top: 1px solid var(--border);
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: auto;
+}
+
+.crop-yield {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.yield-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.yield-value {
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.freshly-badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--green-600);
+  background: var(--green-50);
+  border: 1px solid rgba(46, 125, 50, 0.15);
+  padding: 0.28rem 0.65rem;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+}
+
+[data-theme="dark"] .freshly-badge {
+  color: var(--green-200);
+  background: rgba(76, 175, 80, 0.1);
+}
+
+/* ── HIDE ANIMATION ── */
+.crop-card.hidden {
+  display: none;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .crops-grid {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  }
+
+  .filter-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 600px) {
+  .crops-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-tabs {
+    width: 100%;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 0.25rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .filter-tabs::-webkit-scrollbar { display: none; }
+
+  .crops-search-wrap { max-width: 100%; }
+}
