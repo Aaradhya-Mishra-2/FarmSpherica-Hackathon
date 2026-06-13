@@ -229,34 +229,21 @@
 }
 
 .crop-badge-easy {
-  background: rgba(76, 175, 80, 0.2);
-  color: var(--green-600);
-  border: 1px solid rgba(76, 175, 80, 0.3);
-}
-
-[data-theme="dark"] .crop-badge-easy {
-  background: rgba(76, 175, 80, 0.15);
-  color: var(--green-200);
+  background: var(--badge-easy-bg, rgba(76, 175, 80, 0.2));
+  color: var(--badge-easy-color, var(--green-600));
+  border: 1px solid var(--badge-easy-border, rgba(76, 175, 80, 0.3));
 }
 
 .crop-badge-medium {
-  background: rgba(255, 152, 0, 0.15);
-  color: #e65100;
-  border: 1px solid rgba(255, 152, 0, 0.3);
-}
-
-[data-theme="dark"] .crop-badge-medium {
-  color: #ffb74d;
+  background: var(--badge-medium-bg, rgba(255, 152, 0, 0.15));
+  color: var(--badge-medium-color, #e65100);
+  border: 1px solid var(--badge-medium-border, rgba(255, 152, 0, 0.3));
 }
 
 .crop-badge-hard {
-  background: rgba(244, 67, 54, 0.12);
-  color: #c62828;
-  border: 1px solid rgba(244, 67, 54, 0.2);
-}
-
-[data-theme="dark"] .crop-badge-hard {
-  color: #ef9a9a;
+  background: var(--badge-hard-bg, rgba(244, 67, 54, 0.12));
+  color: var(--badge-hard-color, #c62828);
+  border: 1px solid var(--badge-hard-border, rgba(244, 67, 54, 0.2));
 }
 
 /* Card body */
@@ -360,17 +347,12 @@
 .freshly-badge {
   font-size: 0.72rem;
   font-weight: 600;
-  color: var(--green-600);
-  background: var(--green-50);
-  border: 1px solid rgba(46, 125, 50, 0.15);
+  color: var(--freshly-badge-color, var(--green-600));
+  background: var(--freshly-badge-bg, var(--green-50));
+  border: 1px solid var(--freshly-badge-border, rgba(46, 125, 50, 0.15));
   padding: 0.28rem 0.65rem;
   border-radius: var(--radius-full);
   white-space: nowrap;
-}
-
-[data-theme="dark"] .freshly-badge {
-  color: var(--green-200);
-  background: rgba(76, 175, 80, 0.1);
 }
 
 /* ── HIDE ANIMATION ── */

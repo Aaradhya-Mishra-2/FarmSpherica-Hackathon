@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us — Farmspherica</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="about.css" />
+  <link rel="stylesheet" href="mobile.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+</head>
+<body>
+
+  <!-- ═══════════════ HEADER ═══════════════ -->
+
+  <header class="site-header" id="site-header">
+    <nav class="nav-inner">
+
+      <!-- Logo -->
+      <a href="index.html" class="nav-logo">
+        <div class="nav-logo-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17 8C8 10 5.9 16.17 3.82 20.82L5.71 21.5C5.96 20.97 6.23 20.43 6.5 19.91C7.44 20.58 8.5 21 9.5 21C13.5 21 15.5 17.5 17.5 14C18.5 12.27 20 9.5 22 8.5C20.93 7.83 18.79 7.65 17 8Z"/>
+            <path d="M2 2C2 2 2 8 6 10C9.5 11.73 11 9 11 9C11 9 9 6 6 4L2 2Z" opacity="0.7"/>
+          </svg>
+        </div>
+        FarmSpherica
+      </a>
+
+      <!-- Nav links -->
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="crops.html">Crops</a></li>
+        <li><a href="stats.html">Stats</a></li>
+        <li><a href="about.html" class="active">About</a></li>
+      </ul>
+
+      <!-- Actions: dark mode + login/user pill -->
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode"></button>
+        <a href="login.html" class="btn btn-ghost nav-login-btn">Sign In</a>
+        <a href="login.html#signup" class="btn btn-primary nav-signup-btn">Get Started</a>
+      </div>
+
+      <button class="nav-hamburger" id="navHamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- Mobile nav -->
+  <nav class="nav-mobile" id="navMobile">
+    <a href="index.html">Home</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="crops.html">Crops</a>
+    <a href="stats.html">Stats</a>
+    <a href="about.html">About</a>
+    <div class="nav-mobile-divider"></div>
+    <a href="login.html" class="nav-mobile-login" id="navMobileLogin">Sign In</a>
+  </nav>
+
+  <!-- ═══════════════ MAIN CONTENT ═══════════════ -->
+
+  <main style="padding-top: var(--nav-h);">
+    
+    <!-- Intro Hero Section -->
+    <section class="about-hero">
+      <div class="container">
+        <div class="about-hero-inner">
+          <p class="label reveal">Who we are</p>
+          <h1 class="display-lg reveal delay-1">Reimagining food production</h1>
+          <p class="body-lg reveal delay-2" style="max-width: 720px; margin-top: 1rem;">
+            Farmspherica Innovations is an agritech company dedicated to modernizing agriculture through advanced hydroponic technology that makes sustainable farming accessible and profitable.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab switcher navigation -->
+    <div class="about-tabs-container">
+      <div class="container">
+        <div class="about-tabs-nav glass reveal delay-3">
+          <button class="about-tab-btn active" data-target="about-us-panel">About Us</button>
+          <button class="about-tab-btn" data-target="story-panel">Our Story</button>
+          <button class="about-tab-btn" data-target="team-panel">Our Team</button>
+          <button class="about-tab-btn" data-target="connect-panel">Let's Connect</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Tab Panel Container -->
+    <section class="about-content-section">
+      <div class="container">
+        
+        <!-- ================= PANEL 1: ABOUT US ================= -->
+        <div class="about-panel active" id="about-us-panel">
+          <div class="about-us-grid">
+            <div class="about-us-info reveal">
+              <h2 class="display-md">About Farmspherica</h2>
+              <p class="body-lg" style="margin-top: 1rem; color: var(--text-primary); font-weight: 600;">
+                We're on a mission to revolutionize agriculture through innovative hydroponics technology that makes sustainable farming accessible and profitable.
+              </p>
+              <p class="body-sm" style="margin-top: 1.2rem;">
+                Farmspherica Innovations Pvt. Ltd. designs and manufactures advanced hydroponics systems for farmers, restaurants, educational institutions, and home growers. Our solutions range from compact countertop units to large-scale commercial operations.
+              </p>
+              <p class="body-sm" style="margin-top: 0.8rem;">
+                Our systems integrate cutting-edge technology to optimize growing conditions, nutrient delivery, and resource usage, resulting in higher yields, better quality produce, and reduced environmental impact.
+              </p>
+              <p class="body-sm" style="margin-top: 0.8rem;">
+                Beyond equipment, we provide training, technical support, and a community platform for knowledge sharing among growers. Our goal is to equip our customers with everything they need to succeed in hydroponics farming.
+              </p>
+            </div>
+            
+            <div class="about-us-values">
+              <h3 class="label" style="margin-bottom: 1.5rem;">Our Core Values</h3>
+              <div class="values-grid">
+                <div class="value-card glass-card reveal delay-1">
+                  <div class="value-icon">🌱</div>
+                  <h4 class="value-title">Sustainability</h4>
+                  <p class="body-sm">Developing farming solutions that minimize environmental impact and preserve natural resources.</p>
+                </div>
+                <div class="value-card glass-card reveal delay-2">
+                  <div class="value-icon">💡</div>
+                  <h4 class="value-title">Innovation</h4>
+                  <p class="body-sm">Constantly pushing boundaries of what's possible in hydroponics through agritech research.</p>
+                </div>
+                <div class="value-card glass-card reveal delay-3">
+                  <div class="value-icon">📘</div>
+                  <h4 class="value-title">Knowledge Sharing</h4>
+                  <p class="body-sm">Educating growers and communities about sustainable, water-smart agricultural practices.</p>
+                </div>
+                <div class="value-card glass-card reveal delay-4">
+                  <div class="value-icon">🤝</div>
+                  <h4 class="value-title">Community</h4>
+                  <p class="body-sm">Supporting local food systems and connections between growers and consumers.</p>
+                </div>
+                <div class="value-card glass-card reveal delay-5">
+                  <div class="value-icon">💧</div>
+                  <h4 class="value-title">Resource Efficiency</h4>
+                  <p class="body-sm">Designing systems that maximize yields while minimizing water, electricity, and space.</p>
+                </div>
+                <div class="value-card glass-card reveal delay-6">
+                  <div class="value-icon">⚖️</div>
+                  <h4 class="value-title">Integrity</h4>
+                  <p class="body-sm">Operating with absolute transparency and honesty in all partnerships and business dealings.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Director Message Quote -->
+          <div class="director-section glass-card reveal" style="margin-top: 4rem;">
+            <div class="director-avatar-box">
+              <div class="director-avatar">AG</div>
+            </div>
+            <div class="director-message">
+              <p class="label">Message from our Director</p>
+              <h3 class="quote-heading">"I want to be part of a transformation where farming is not just a means of survival, but a source of pride."</h3>
+              <p class="body-sm" style="margin-top: 1rem;">
+                Dr. A.P.J. Abdul Kalam taught me to dream — and Farmspherica was born from that dream.
+              </p>
+              <p class="body-sm" style="margin-top: 0.8rem;">
+                I truly believe that real progress is incomplete until we improve the lives of our farmers. Every plant we grow is not just food, but a seed of hope. Every step at Farmspherica is dedicated to turning that hope into reality — building a future where both farming and wellness are treated with the respect they deserve.
+              </p>
+              <div class="director-signature" style="margin-top: 1.5rem;">
+                <span class="director-name">Akash Gupta</span>
+                <span class="director-title">Director, Farmspherica Innovations</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= PANEL 2: OUR STORY ================= -->
+        <div class="about-panel" id="story-panel">
+          <div class="story-header reveal" style="max-width: 800px; margin-bottom: 3rem;">
+            <h2 class="display-md">Our Story</h2>
+            <p class="body-lg" style="margin-top: 1rem;">From a simple idea to revolutionize farming to a leader in hydroponics technology.</p>
+          </div>
+          
+          <div class="timeline-container">
+            
+            <div class="timeline-item left reveal">
+              <div class="timeline-badge">2024</div>
+              <div class="timeline-content glass-card">
+                <h3 class="timeline-title">The Beginning</h3>
+                <p class="body-sm">
+                  Farmspherica Innovations Pvt. Ltd. was founded by Akash Gupta in 2024. As an engineer, Akash was inspired to address the structural challenges facing modern agriculture and envisioned a future where technology and sustainability go hand in hand.
+                </p>
+                <p class="body-sm" style="margin-top: 0.5rem;">
+                  Driven by a passion for innovation and a commitment to empowering farmers, he set out to create solutions that make farming more efficient, sustainable, and rewarding.
+                </p>
+              </div>
+            </div>
+            
+            <div class="timeline-item right reveal">
+              <div class="timeline-badge">Goal</div>
+              <div class="timeline-content glass-card accent-card">
+                <h3 class="timeline-title" style="color: var(--accent);">Our Mission</h3>
+                <p class="body-lg" style="color: var(--text-primary); font-weight: 600; font-style: italic; margin-top: 0.5rem; border-left: 3px solid var(--accent); padding-left: 1rem;">
+                  "To revolutionize agriculture through innovative hydroponics technology, making sustainable farming accessible and profitable for growers of all sizes while contributing to global food security."
+                </p>
+              </div>
+            </div>
+
+            <div class="timeline-item left reveal">
+              <div class="timeline-badge">2024+</div>
+              <div class="timeline-content glass-card">
+                <h3 class="timeline-title">Evolution & Growth</h3>
+                <p class="body-sm">
+                  Since its inception, Farmspherica Innovations has rapidly evolved from a single visionary's dream into a thriving community of innovators and growers. Our journey has been marked by continuous learning, hands-on experimentation, and a relentless pursuit of better solutions for farmers everywhere.
+                </p>
+                <p class="body-sm" style="margin-top: 0.5rem;">
+                  By collaborating with experts and listening to the needs of real farmers, we have developed systems that are not only technologically advanced but also practical and accessible. Our growth is a testament to the power of shared vision.
+                </p>
+              </div>
+            </div>
+
+            <div class="timeline-item right reveal">
+              <div class="timeline-badge">Today</div>
+              <div class="timeline-content glass-card">
+                <h3 class="timeline-title">Where We Are Today</h3>
+                <p class="body-sm">
+                  Today, Farmspherica Innovations stands as a beacon of innovation in sustainable agriculture. Our dedicated team works tirelessly to push the boundaries of what is possible in hydroponics and smart farming, always with the goal of making a positive impact on farmers' lives and the environment.
+                </p>
+                <p class="body-sm" style="margin-top: 0.5rem;">
+                  With a growing network of partners and supporters, we continue to expand our reach, bringing modern farming solutions to communities across the region and inspiring the next generation of agricultural leaders.
+                </p>
+              </div>
+            </div>
+
+            <div class="timeline-item left reveal">
+              <div class="timeline-badge">Future</div>
+              <div class="timeline-content glass-card">
+                <h3 class="timeline-title">Looking to the Future</h3>
+                <p class="body-sm">
+                  As we continue to grow, our focus remains on making hydroponics more accessible, efficient, and sustainable. We're currently developing new AI-powered systems that optimize nutrient delivery and energy usage, as well as smaller-scale solutions for home growers and educational settings.
+                </p>
+                <p class="body-sm" style="margin-top: 0.5rem; font-weight: 500; color: var(--accent);">
+                  🌿 Revolutionizing agriculture through innovative hydroponics technology for a sustainable future.
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ================= PANEL 3: OUR TEAM ================= -->
+        <div class="about-panel" id="team-panel">
+          <div class="story-header reveal" style="max-width: 800px; margin-bottom: 3rem;">
+            <h2 class="display-md">Meet Our Team</h2>
+            <p class="body-lg" style="margin-top: 1rem;">Our diverse team of experts is passionate about revolutionizing agriculture through hydroponics technology and sustainable practices.</p>
+          </div>
+          
+          <div class="team-grid">
+            <!-- Akash Gupta -->
+            <div class="team-card glass-card reveal">
+              <div class="team-avatar-box">
+                <div class="team-avatar">AG</div>
+              </div>
+              <h3 class="team-name">Akash Gupta</h3>
+              <p class="team-role">Founder & CEO</p>
+              <p class="body-sm team-desc">Visionary founder with a passion for sustainable agriculture and innovative hydroponics solutions.</p>
+            </div>
+            
+            <!-- Navaditya Singh Rana -->
+            <div class="team-card glass-card reveal delay-1">
+              <div class="team-avatar-box">
+                <div class="team-avatar">NR</div>
+              </div>
+              <h3 class="team-name">Navaditya Singh Rana</h3>
+              <p class="team-role">Co-Founder & CTO</p>
+              <p class="body-sm team-desc">Co-founder and technology leader, driving the development of advanced hydroponics systems.</p>
+            </div>
+            
+            <!-- Tanya Gupta -->
+            <div class="team-card glass-card reveal delay-2">
+              <div class="team-avatar-box">
+                <div class="team-avatar">TG</div>
+              </div>
+              <h3 class="team-name">Tanya Gupta</h3>
+              <p class="team-role">Co-Founder & Research Head</p>
+              <p class="body-sm team-desc">Heads research initiatives, ensuring scientific rigor and innovation in all projects.</p>
+            </div>
+            
+            <!-- Ambika Swargiary -->
+            <div class="team-card glass-card reveal delay-3">
+              <div class="team-avatar-box">
+                <div class="team-avatar">AS</div>
+              </div>
+              <h3 class="team-name">Ambika Swargiary</h3>
+              <p class="team-role">Research Analyst</p>
+              <p class="body-sm team-desc">Research analyst dedicated to data-driven insights and sustainable agricultural practices.</p>
+            </div>
+            
+            <!-- Rahul Sangwan -->
+            <div class="team-card glass-card reveal">
+              <div class="team-avatar-box">
+                <div class="team-avatar">RS</div>
+              </div>
+              <h3 class="team-name">Rahul Sangwan</h3>
+              <p class="team-role">Project Head</p>
+              <p class="body-sm team-desc">Project head focused on delivering innovative hydroponics solutions and managing cross-functional teams.</p>
+            </div>
+            
+            <!-- Abhishek Kataria -->
+            <div class="team-card glass-card reveal delay-1">
+              <div class="team-avatar-box">
+                <div class="team-avatar">AK</div>
+              </div>
+              <h3 class="team-name">Abhishek Kataria</h3>
+              <p class="team-role">Project Executive</p>
+              <p class="body-sm team-desc">Project executive focused on delivering innovative hydroponics solutions and managing cross-functional teams.</p>
+            </div>
+            
+            <!-- Livia Colaco -->
+            <div class="team-card glass-card reveal delay-2">
+              <div class="team-avatar-box">
+                <div class="team-avatar">LC</div>
+              </div>
+              <h3 class="team-name">Livia Colaco</h3>
+              <p class="team-role">Research Executive</p>
+              <p class="body-sm team-desc">Research executive focused on delivering innovative hydroponics solutions and managing cross-functional teams.</p>
+            </div>
+            
+            <!-- Gourav Saini -->
+            <div class="team-card glass-card reveal delay-3">
+              <div class="team-avatar-box">
+                <div class="team-avatar">GS</div>
+              </div>
+              <h3 class="team-name">Gourav Saini</h3>
+              <p class="team-role">Social Media Head</p>
+              <p class="body-sm team-desc">Social media head focused on enhancing our online presence and engagement.</p>
+            </div>
+
+            <!-- Priyanka Sharma -->
+            <div class="team-card glass-card reveal">
+              <div class="team-avatar-box">
+                <div class="team-avatar">PS</div>
+              </div>
+              <h3 class="team-name">Priyanka Sharma</h3>
+              <p class="team-role">Research Analyst</p>
+              <p class="body-sm team-desc">Research analyst focused on data-driven insights and sustainable agricultural practices.</p>
+            </div>
+
+            <!-- Navneet Kumar -->
+            <div class="team-card glass-card reveal delay-1">
+              <div class="team-avatar-box">
+                <div class="team-avatar">NK</div>
+              </div>
+              <h3 class="team-name">Navneet Kumar</h3>
+              <p class="team-role">Finance Analyst</p>
+              <p class="body-sm team-desc">Finance analyst focused on budgeting, forecasting, and financial planning.</p>
+            </div>
+
+            <!-- Aryan Gupta -->
+            <div class="team-card glass-card reveal delay-2">
+              <div class="team-avatar-box">
+                <div class="team-avatar">AG</div>
+              </div>
+              <h3 class="team-name">Aryan Gupta</h3>
+              <p class="team-role">Sustainability Lead</p>
+              <p class="body-sm team-desc">Sustainability lead driving eco-friendly practices and green initiatives across all operations.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= PANEL 4: LET'S CONNECT ================= -->
+        <div class="about-panel" id="connect-panel">
+          <div class="story-header reveal" style="max-width: 800px; margin-bottom: 3rem;">
+            <h2 class="display-md">Let's Connect</h2>
+            <p class="body-lg" style="margin-top: 1rem;">We'd love to hear from you! Whether you have questions about our hydroponics systems, want to explore partnership opportunities, or need technical support, our team is here to help.</p>
+          </div>
+          
+          <div class="connect-grid">
+            <div class="connect-info-col">
+              
+              <!-- Address -->
+              <div class="connect-card glass-card reveal">
+                <div class="connect-icon">📍</div>
+                <div class="connect-info">
+                  <h4>Address</h4>
+                  <p class="body-sm">
+                    B K Birla Institute of Engineering & Technology (BKBIET),<br>
+                    Pilani, 333031, Jhunjhunu Rajasthan, India
+                  </p>
+                </div>
+              </div>
+              
+              <!-- Phone & Email -->
+              <div class="connect-card glass-card reveal delay-1">
+                <div class="connect-icon">📞</div>
+                <div class="connect-info">
+                  <h4>Get In Touch</h4>
+                  <p class="body-sm"><strong>Phone:</strong> +91 7459805391</p>
+                  <p class="body-sm"><strong>Email:</strong> farmsphericainnovations@gmail.com</p>
+                </div>
+              </div>
+
+              <!-- Operating Hours -->
+              <div class="connect-card glass-card reveal delay-2">
+                <div class="connect-icon">⏰</div>
+                <div class="connect-info">
+                  <h4>Operating Hours</h4>
+                  <p class="body-sm"><strong>Monday - Friday:</strong> 9:00 AM - 5:00 PM IST</p>
+                  <p class="body-sm"><strong>Saturday:</strong> 10:00 AM - 2:00 PM IST</p>
+                  <p class="body-sm"><strong>Sunday:</strong> Closed</p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="connect-form-col glass-card reveal">
+              <h3 class="display-sm" style="margin-bottom: 0.5rem; font-size: 1.4rem;">Send a Message</h3>
+              <p class="body-sm" style="margin-bottom: 1.5rem;">Fill out the form below and we will get back to you within 24 hours.</p>
+              
+              <form id="about-enquiry-form">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="form-name">Name</label>
+                    <input type="text" id="form-name" required placeholder="Your Name">
+                  </div>
+                  <div class="form-group">
+                    <label for="form-email">Email</label>
+                    <input type="email" id="form-email" required placeholder="Your Email">
+                  </div>
+                </div>
+                
+                <div class="form-group" style="margin-top: 1rem;">
+                  <label for="form-subject">Subject</label>
+                  <input type="text" id="form-subject" required placeholder="What is this about?">
+                </div>
+                
+                <div class="form-group" style="margin-top: 1rem;">
+                  <label for="form-message">Message</label>
+                  <textarea id="form-message" required placeholder="Type your query..." rows="5"></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="margin-top: 1.5rem; width: 100%; justify-content: center;">Send Message →</button>
+              </form>
+              
+              <div id="enquiry-form-success" class="form-success-alert" style="display: none;">
+                <span class="success-icon">✅</span>
+                <div>
+                  <h4>Enquiry Sent!</h4>
+                  <p class="body-sm">Thank you for connecting with Farmspherica. We will get back to you soon.</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <div class="footer-logo-icon">
+              <svg viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 20.82L5.71 21.5C5.96 20.97 6.23 20.43 6.5 19.91C7.44 20.58 8.5 21 9.5 21C13.5 21 15.5 17.5 17.5 14C18.5 12.27 20 9.5 22 8.5C20.93 7.83 18.79 7.65 17 8Z"/><path d="M2 2C2 2 2 8 6 10C9.5 11.73 11 9 11 9C11 9 9 6 6 4L2 2Z" opacity="0.7"/></svg>
+            </div>
+            Farm<span style="color:var(--accent)">spherica</span>
+          </div>
+          <p class="footer-tagline">Precision hydroponic monitoring for the next generation of urban farmers. Grow anywhere, harvest always.</p>
+          <div class="footer-socials">
+            <a class="social-btn" href="#" aria-label="Twitter">𝕏</a>
+            <a class="social-btn" href="#" aria-label="Instagram">📷</a>
+            <a class="social-btn" href="#" aria-label="LinkedIn">in</a>
+          </div>
+        </div>
+
+        <div>
+          <p class="footer-col-title">Pages</p>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="crops.html">Crops</a></li>
+            <li><a href="stats.html">Stats</a></li>
+            <li><a href="about.html">About</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="footer-col-title">Features</p>
+          <ul class="footer-links">
+            <li><a href="dashboard.html">Live Monitoring</a></li>
+            <li><a href="dashboard.html">pH Tracking</a></li>
+            <li><a href="dashboard.html">EC Levels</a></li>
+            <li><a href="stats.html">Water Savings</a></li>
+            <li><a href="crops.html">Crop Catalog</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="footer-col-title">Company</p>
+          <ul class="footer-links">
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="about.html#faq">FAQ</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2025 Farmspherica. Built for The Founders' Web Hackathon.</p>
+        <p class="footer-copy" style="color: var(--accent);">🌿 Growing the future, one sensor at a time.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="auth.js"></script>
+  <script src="app.js"></script>
+  <script src="about.js"></script>
+</body>
+</html>

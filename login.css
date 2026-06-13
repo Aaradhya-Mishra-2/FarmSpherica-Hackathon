@@ -727,11 +727,10 @@
   border: 1px solid rgba(46,125,50,0.2);
   border-radius: var(--radius-md);
   font-size: 0.85rem;
-  color: var(--green-600);
+  color: var(--success-color, var(--green-600));
   font-weight: 500;
   animation: formFadeIn 0.3s ease;
 }
-[data-theme="dark"] .reset-sent { color: var(--green-200); }
 
 /* ── Field group error state ── */
 .field-group.has-error .field-input-wrap::after {

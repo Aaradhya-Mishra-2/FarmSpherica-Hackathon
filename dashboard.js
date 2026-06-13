@@ -8,6 +8,70 @@
   'use strict';
 
   /* ══════════════════════════════════════
+     0. APPLY ADMIN OVERRIDES (from admin.html)
+  ══════════════════════════════════════ */
+  const ADMIN_DATA_KEY = 'farmspherica-data';
+  let adminOverrides = null;
+  try {
+    const raw = localStorage.getItem(ADMIN_DATA_KEY);
+    if (raw) adminOverrides = JSON.parse(raw);
+  } catch (e) { /* ignore bad data */ }
+
+  let defaultStatusText = 'All systems nominal — nutrients balanced, temperature stable, pH in optimal range';
+
+  function applyAdminOverrides() {
+    if (!adminOverrides) return;
+
+    // Status banner default text
+    if (adminOverrides.statusText) {
+      defaultStatusText = adminOverrides.statusText;
+      const textEl = document.getElementById('statusText');
+      if (textEl) textEl.textContent = defaultStatusText;
+    }
+
+    // Plant growth tracker
+    if (Array.isArray(adminOverrides.plants)) {
+      const items = document.querySelectorAll('#plantList .plant-item');
+      adminOverrides.plants.forEach((plant, i) => {
+        const item = items[i];
+        if (!item) return;
+        const emojiEl = item.querySelector('.plant-item-emoji');
+        const nameEl  = item.querySelector('.plant-item-name');
+        const metaEl  = item.querySelector('.plant-item-meta');
+        const pctEl   = item.querySelector('.plant-item-pct');
+        const fillEl  = item.querySelector('.plant-progress-fill');
+        if (emojiEl) emojiEl.textContent = plant.emoji;
+        if (nameEl)  nameEl.textContent  = plant.name;
+        if (metaEl)  metaEl.textContent  = `Day ${plant.day} · Harvest in ${plant.harvest} days`;
+        if (pctEl)   pctEl.textContent   = `${plant.pct}%`;
+        if (fillEl)  fillEl.setAttribute('data-width', Math.max(0, Math.min(100, plant.pct)) + '%');
+      });
+    }
+
+    // Quick stats (This Cycle panel) — order matches the HTML
+    if (adminOverrides.quickStats) {
+      const qs = adminOverrides.quickStats;
+      const order = ['daysRunning', 'activeCrops', 'uptime', 'litresSaved', 'alertsResolved', 'peakTemp'];
+      document.querySelectorAll('.quick-stat-num[data-count]').forEach((el, i) => {
+        const key = order[i];
+        if (key && qs[key] !== undefined) el.setAttribute('data-count', qs[key]);
+      });
+    }
+
+    // Next harvest countdown
+    if (adminOverrides.nextHarvest) {
+      const harvestDaysEl = document.getElementById('harvestDays');
+      const harvestCropEl = document.querySelector('.harvest-crop');
+      const harvestIconEl = document.querySelector('.harvest-icon');
+      if (harvestDaysEl) harvestDaysEl.textContent = adminOverrides.nextHarvest.days;
+      if (harvestCropEl) harvestCropEl.textContent = adminOverrides.nextHarvest.crop;
+      if (harvestIconEl) harvestIconEl.textContent = adminOverrides.nextHarvest.icon;
+    }
+  }
+
+  applyAdminOverrides();
+
+  /* ══════════════════════════════════════
      1. LIVE CLOCK
   ══════════════════════════════════════ */
   const clockEl   = document.getElementById('live-clock');
@@ -51,6 +115,28 @@
     water: { el: document.getElementById('sensor-water'), val: 2.4,  min: 1.5,  max: 4.0,  step: 0.05,  dec: 1,  barId: 'bar-water', trendId: 'trend-water', barMin: 1.5, barMax: 4.0  },
   };
 
+  function pct(val, min, max) {
+    return Math.round(((val - min) / (max - min)) * 100);
+  }
+
+  // Apply admin-saved sensor values
+  if (adminOverrides && adminOverrides.sensors) {
+    Object.keys(sensors).forEach(key => {
+      const override = adminOverrides.sensors[key];
+      if (!override) return;
+      const s = sensors[key];
+      s.val = override.value;
+      if (s.el) s.el.textContent = s.val.toFixed(s.dec);
+
+      // Also update the bar's data-width so initBarFills animates to the right spot
+      const bar = document.getElementById(s.barId);
+      if (bar) {
+        const p = pct(s.val, s.barMin, s.barMax);
+        bar.setAttribute('data-width', Math.min(100, Math.max(4, p)) + '%');
+      }
+    });
+  }
+
   // Animate bar fills on load
   function initBarFills() {
     document.querySelectorAll('[data-width]').forEach(el => {
@@ -60,10 +146,6 @@
     });
   }
   initBarFills();
-
-  function pct(val, min, max) {
-    return Math.round(((val - min) / (max - min)) * 100);
-  }
 
   function getTrend(key, newVal) {
     const s = sensors[key];
@@ -132,7 +214,7 @@
       if (badge) badge.textContent = issues.length;
     } else {
       banner.classList.remove('warn');
-      textEl.textContent = 'All systems nominal — nutrients balanced, temperature stable, pH in optimal range';
+      textEl.textContent = defaultStatusText;
       if (badge) badge.textContent = '0';
       if (badge) badge.style.display = issues.length ? '' : 'none';
     }

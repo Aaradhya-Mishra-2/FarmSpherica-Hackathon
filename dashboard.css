@@ -254,30 +254,18 @@
 }
 
 .trend-up {
-  background: rgba(46,125,50,0.1);
-  color: var(--green-600);
-}
-
-[data-theme="dark"] .trend-up {
-  color: var(--green-200);
+  background: var(--trend-up-bg, rgba(46,125,50,0.1));
+  color: var(--trend-up-color, var(--green-600));
 }
 
 .trend-stable {
-  background: rgba(33,150,243,0.1);
-  color: #1565c0;
-}
-
-[data-theme="dark"] .trend-stable {
-  color: #90caf9;
+  background: var(--trend-stable-bg, rgba(33,150,243,0.1));
+  color: var(--trend-stable-color, #1565c0);
 }
 
 .trend-warn {
-  background: rgba(255,152,0,0.12);
-  color: #e65100;
-}
-
-[data-theme="dark"] .trend-warn {
-  color: #ffb74d;
+  background: var(--trend-warn-bg, rgba(255,152,0,0.12));
+  color: var(--trend-warn-color, #e65100);
 }
 
 .stat-card-value {
@@ -611,8 +599,8 @@
   bottom: calc(100% + 4px);
   left: 50%;
   transform: translateX(-50%) scale(0);
-  background: var(--gray-900);
-  color: #fff;
+  background: var(--text-primary);
+  color: var(--bg);
   font-size: 0.65rem;
   font-weight: 700;
   padding: 0.2rem 0.5rem;
@@ -621,11 +609,6 @@
   transition: transform 0.15s ease;
   pointer-events: none;
   font-family: var(--font-display);
-}
-
-[data-theme="dark"] .chart-bar-fill::after {
-  background: var(--green-200);
-  color: var(--gray-900);
 }
 
 .chart-bar-fill:hover::after {
@@ -753,13 +736,9 @@
   align-self: flex-start;
 }
 
-.tag-warn { background: rgba(255,152,0,0.12); color: #e65100; }
-.tag-good { background: rgba(46,125,50,0.1); color: var(--green-600); }
-.tag-info { background: rgba(33,150,243,0.1); color: #1565c0; }
-
-[data-theme="dark"] .tag-warn { color: #ffb74d; }
-[data-theme="dark"] .tag-good { color: var(--green-200); }
-[data-theme="dark"] .tag-info { color: #90caf9; }
+.tag-warn { background: var(--trend-warn-bg, rgba(255,152,0,0.12)); color: var(--tag-warn-color, #e65100); }
+.tag-good { background: var(--trend-up-bg, rgba(46,125,50,0.1)); color: var(--tag-good-color, var(--green-600)); }
+.tag-info { background: var(--trend-stable-bg, rgba(33,150,243,0.1)); color: var(--tag-info-color, #1565c0); }
 
 /* ── Activity log ── */
 .clear-log-btn {

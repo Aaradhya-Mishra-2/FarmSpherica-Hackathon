@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D Farm Biodome — Farmspherica</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Fullscreen layout for 3D simulation */
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #050b07;
+      font-family: var(--font-body);
+    }
+    
+    #canvas3d {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Fullscreen loading overlay */
+    .sim-loader-overlay {
+      position: fixed;
+      inset: 0;
+      background: #030804;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease;
+      color: #00ff66;
+      font-family: monospace;
+    }
+
+    .loader-spinner {
+      width: 60px;
+      height: 60px;
+      border: 3px solid rgba(0, 255, 102, 0.1);
+      border-top-color: #00ff66;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: var(--space-md);
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .loader-text {
+      font-size: 1rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    /* HUD overlay widgets */
+    .hud-header {
+      position: absolute;
+      top: var(--space-md);
+      left: var(--space-md);
+      right: var(--space-md);
+      z-index: 100;
+      pointer-events: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .hud-title-card {
+      pointer-events: auto;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border-radius: var(--radius-md);
+      padding: 0.75rem var(--space-md);
+      color: var(--text-primary);
+    }
+
+    .hud-title-card h1 {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 800;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .hud-title-card p {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      margin: 0.1rem 0 0 0;
+    }
+
+    /* Details Panel */
+    .hud-details-panel {
+      position: absolute;
+      top: 90px;
+      right: var(--space-md);
+      width: 320px;
+      z-index: 100;
+      pointer-events: auto;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border-radius: var(--radius-md);
+      padding: var(--space-md);
+      color: var(--text-primary);
+      transition: all var(--transition);
+      transform: translateX(360px);
+      opacity: 0;
+    }
+
+    .hud-details-panel.show {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    .details-title-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-sm);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: var(--space-xs);
+    }
+
+    .details-emoji {
+      font-size: 1.8rem;
+    }
+
+    .details-name {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .details-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.6rem;
+      font-size: 0.85rem;
+    }
+
+    .details-row .label {
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .details-row .value {
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .hud-instructions-card {
+      position: absolute;
+      top: 90px;
+      left: var(--space-md);
+      width: 250px;
+      z-index: 100;
+      pointer-events: auto;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border-radius: var(--radius-md);
+      padding: var(--space-md);
+      color: var(--text-primary);
+    }
+
+    .instructions-title {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+    }
+
+    .instructions-list {
+      padding-left: 1.2rem;
+      margin: 0;
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .instructions-list li {
+      margin-bottom: 0.4rem;
+    }
+
+    /* Controls bar at bottom */
+    .hud-controls-bar {
+      position: absolute;
+      bottom: var(--space-md);
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      display: flex;
+      gap: 0.6rem;
+      pointer-events: auto;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .control-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.6rem var(--space-md);
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border-radius: var(--radius-full);
+      color: var(--text-primary);
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all var(--transition);
+      cursor: pointer;
+    }
+
+    .control-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .control-btn.active {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--accent);
+      box-shadow: inset 0 0 0 1.5px var(--accent-light);
+    }
+
+    .hud-mode-selector {
+      display: flex;
+      gap: 0.4rem;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border-radius: var(--radius-full);
+      padding: 0.25rem;
+      pointer-events: auto;
+    }
+
+    .mode-tab {
+      background: transparent;
+      border: none;
+      border-radius: var(--radius-full);
+      padding: 0.5rem 1.1rem;
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .mode-tab:hover {
+      color: var(--text-primary);
+    }
+
+    .mode-tab.active {
+      background: var(--accent);
+      color: var(--white);
+    }
+
+    [data-theme="high-contrast"] .mode-tab.active {
+      background: var(--accent);
+      color: #000000;
+    }
+    
+    [data-theme="nexus"] .mode-tab.active {
+      background: var(--accent);
+      color: #11100e;
+    }
+
+    /* Responsive Mobile CSS overrides for 3D Viewport */
+    @media (max-width: 768px) {
+      .hud-header {
+        flex-direction: column;
+        gap: 0.5rem;
+        width: calc(100% - 2rem);
+      }
+
+      .hud-title-card {
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      .hud-mode-selector {
+        width: 100%;
+        justify-content: center;
+        box-sizing: border-box;
+      }
+
+      .mode-tab {
+        flex: 1;
+        justify-content: center;
+        font-size: 0.75rem;
+        padding: 0.45rem 0.6rem;
+      }
+
+      .hud-instructions-card {
+        display: none; /* Hide helper panel on tiny screens to avoid overlaps */
+      }
+
+      .hud-details-panel {
+        top: auto;
+        bottom: 80px;
+        left: var(--space-md);
+        right: var(--space-md);
+        width: auto;
+        transform: translateY(200px);
+      }
+
+      .hud-details-panel.show {
+        transform: translateY(0);
+      }
+
+      .hud-controls-bar {
+        bottom: var(--space-xs);
+        gap: 0.4rem;
+        width: 100%;
+        padding: 0 var(--space-xs);
+        box-sizing: border-box;
+      }
+
+      .control-btn {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.78rem;
+      }
+    }
+  </style>
+</head>
+<body class="farm3d-body">
+
+  <!-- Fullscreen loader -->
+  <div class="sim-loader-overlay" id="loaderOverlay">
+    <div class="loader-spinner"></div>
+    <div class="loader-text">Loading 3D Biodome...</div>
+  </div>
+
+  <!-- Main 3D Canvas -->
+  <div id="canvas3d"></div>
+
+  <!-- HUD overlay header -->
+  <div class="hud-header">
+    <div class="hud-title-card">
+      <h1 id="hudTitleText">FarmSpherica Smart-Dome</h1>
+      <p id="hudSubTitleText">Precision Hydroponic Telemetry</p>
+    </div>
+
+    <!-- Mode Selector Tabs -->
+    <div class="hud-mode-selector">
+      <button class="mode-tab active" id="tabBiodome">🛰️ Smart Biodome</button>
+      <button class="mode-tab" id="tabFarmland">🚜 Big Farmland</button>
+    </div>
+    
+    <!-- Theme Toggle Dropdown Container -->
+    <div class="nav-actions" style="pointer-events: auto;">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme"></button>
+    </div>
+  </div>
+
+  <!-- Instruction Overlay -->
+  <div class="hud-instructions-card">
+    <div class="instructions-title">💡 Controls</div>
+    <ul class="instructions-list">
+      <li><strong>Drag</strong> with left click to orbit scene</li>
+      <li><strong>Scroll</strong> to zoom in and out</li>
+      <li><strong>Right click drag</strong> to pan camera</li>
+      <li><strong>Click crop rows</strong> to display telemetry HUD</li>
+      <li>Use buttons below to toggle hardware overrides</li>
+    </ul>
+  </div>
+
+  <!-- Active selection details panel -->
+  <div class="hud-details-panel" id="detailsPanel">
+    <div class="details-title-row">
+      <span class="details-emoji" id="cropEmoji">🥬</span>
+      <div>
+        <h3 class="details-name" id="cropName">Butterhead Lettuce</h3>
+        <span class="badge" style="font-size:0.65rem; padding: 0.15rem 0.5rem;" id="cropStatus">Thriving</span>
+      </div>
+    </div>
+    <div class="sim-content">
+      <div class="details-row">
+        <span class="label">Moisture level:</span>
+        <span class="value" id="cropMoisture">82%</span>
+      </div>
+      <div class="details-row">
+        <span class="label">Grow rate:</span>
+        <span class="value" id="cropGrowRate">Optimal</span>
+      </div>
+      <div class="details-row">
+        <span class="label">Harvest count:</span>
+        <span class="value" id="cropHarvest">12 days</span>
+      </div>
+      <div class="details-row">
+        <span class="label">EC Level:</span>
+        <span class="value" id="cropEc">1.8 mS/cm</span>
+      </div>
+      <div class="details-row">
+        <span class="label">Yield projection:</span>
+        <span class="value" style="color:var(--accent);" id="cropYield">+24%</span>
+      </div>
+      <p id="cropDesc" style="font-size:0.75rem; color:var(--text-secondary); margin: 0.6rem 0 0 0; line-height:1.4;">
+        Grown in aerated channels with custom nutrient ratios. High light exposure.
+      </p>
+    </div>
+  </div>
+
+  <!-- Controls toolbar footer -->
+  <div class="hud-controls-bar">
+    <button class="control-btn" id="btnHome">🏠 Return Home</button>
+    
+    <!-- Biodome-specific Controls -->
+    <button class="control-btn active biodome-ctrl" id="btnDome">🌐 Glass Dome: ON</button>
+    <button class="control-btn active biodome-ctrl" id="btnLights">💡 Grow Lights: ON</button>
+    
+    <!-- Farmland-specific Controls -->
+    <button class="control-btn active farmland-ctrl" id="btnIrrigation" style="display: none;">🌧️ Irrigation: ON</button>
+    <button class="control-btn active farmland-ctrl" id="btnWeather" style="display: none;">☀️ Weather: SUNNY</button>
+    
+    <button class="control-btn active" id="btnRotate">🔄 Auto Rotate: ON</button>
+  </div>
+
+  <!-- Three.js + OrbitControls + Custom script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="app.js"></script>
+  <script src="farm3d.js"></script>
+</body>
+</html>

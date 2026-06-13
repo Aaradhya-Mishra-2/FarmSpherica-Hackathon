@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login — Farmspherica</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="mobile.css" />
+  <link rel="stylesheet" href="dashboard.css" />
+  <link rel="stylesheet" href="admin.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+</head>
+<body>
+
+  <!-- ═══════════════ HEADER ═══════════════ -->
+  <header class="site-header" id="site-header">
+    <nav class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="nav-logo-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17 8C8 10 5.9 16.17 3.82 20.82L5.71 21.5C5.96 20.97 6.23 20.43 6.5 19.91C7.44 20.58 8.5 21 9.5 21C13.5 21 15.5 17.5 17.5 14C18.5 12.27 20 9.5 22 8.5C20.93 7.83 18.79 7.65 17 8Z"/>
+            <path d="M2 2C2 2 2 8 6 10C9.5 11.73 11 9 11 9C11 9 9 6 6 4L2 2Z" opacity="0.7"/>
+          </svg>
+        </div>
+        Farm<span>spherica</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="crops.html">Crops</a></li>
+        <li><a href="stats.html">Stats</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode"></button>
+        <a href="login.html" class="btn btn-ghost nav-login-btn">Sign In</a>
+        <a href="login.html" class="btn btn-primary nav-signup-btn">Get Started</a>
+      </div>
+
+      <button class="nav-hamburger" id="navHamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <nav class="nav-mobile" id="navMobile">
+    <a href="index.html">Home</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="crops.html">Crops</a>
+    <a href="stats.html">Stats</a>
+    <a href="about.html">About</a>
+    <div class="nav-mobile-divider"></div>
+    <a href="login.html" class="nav-mobile-login" id="navMobileLogin">Sign In</a>
+  </nav>
+
+  <!-- ═══════════════ ADMIN LOGIN ═══════════════ -->
+  <main class="admin-login-main">
+    <div class="admin-login-wrap">
+
+      <div class="admin-login-card glass-card reveal visible">
+        <div class="admin-login-icon">🔐</div>
+        <h1 class="display-md admin-login-title">Admin Login</h1>
+        <p class="body-sm admin-login-sub">Sign in to manage live Farmspherica dashboard data.</p>
+
+        <form id="adminLoginForm" class="admin-login-form">
+          <div class="admin-field">
+            <label for="adminUser">Username</label>
+            <input type="text" id="adminUser" name="adminUser" autocomplete="username" placeholder="admin" required />
+          </div>
+
+          <div class="admin-field">
+            <label for="adminPass">Password</label>
+            <input type="password" id="adminPass" name="adminPass" autocomplete="current-password" placeholder="••••••••" required />
+          </div>
+
+          <p class="admin-error" id="adminError">Incorrect username or password.</p>
+
+          <button type="submit" class="btn btn-primary admin-login-btn">Sign In</button>
+        </form>
+
+        <p class="admin-login-hint">Default credentials: <code>admin</code> / <code>farmspherica</code></p>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2025 Farmspherica. Built for The Founders' Web Hackathon.</p>
+        <p class="footer-copy" style="color: var(--accent);">🌿 Growing the future, one sensor at a time.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="auth.js"></script>
+  <script src="app.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
