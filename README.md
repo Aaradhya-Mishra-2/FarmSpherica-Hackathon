@@ -48,10 +48,10 @@ This project was developed for a hackathon to demonstrate how artificial intelli
 
 ## Tech Stack
 
-* Frontend: React / Next.js
+* Frontend: HTML 5, JS , CSS 3
 * Styling: Tailwind CSS
-* AI: Computer Vision & Machine Learning Models
-* Backend: Node.js / Firebase / Supabase
+* AI: Claude 4.1 🔥
+* Backend: None (not allowed in hackathon)
 * Deployment: Netlify
 
 ## Current Status
