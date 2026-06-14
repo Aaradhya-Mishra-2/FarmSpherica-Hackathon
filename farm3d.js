@@ -28,6 +28,10 @@
   let weatherState = 'sunny'; // 'sunny' or 'stormy'
   let lightningTimer = 0;
 
+  // Rooftop Farm elements
+  let rooftopFans = [];
+  let rooftopCrops = [];
+
   // Interaction State
   const interactiveObjects = [];
   let activeSelectIndex = -1;
@@ -186,6 +190,18 @@
       yield: 'Active',
       status: 'Nominal',
       desc: 'Low-evaporation linear spray bar. Synchronized with soil sensors to spray only when soil moisture falls below 65%.'
+    },
+    {
+      id: 'rooftop-farm',
+      name: 'Rooftop Garden Hub',
+      emoji: '🏙️',
+      moisture: '76%',
+      growRate: 'Steady',
+      harvest: '10 days',
+      ec: '1.5 mS/cm',
+      yield: '+20%',
+      status: 'Thriving',
+      desc: 'Elevated rooftop planters growing leafy greens and herbs above the processing building. Ventilation fans regulate airflow and solar arrays offset power draw.'
     }
   ];
 
@@ -570,6 +586,9 @@
             child.material.color.setHex(0xffffff); // fluffy white clouds
           }
         }
+        if (child.userData.isRoofGreenery) {
+          child.material.color.setHex(landColors.foliage);
+        }
       }
     });
 
@@ -808,6 +827,9 @@
       if (x > 6 && z < -5) {
         y = 0; // flatten windmill floor
       }
+      if (x > 5 && z > 7) {
+        y = 0; // flatten rooftop farm building floor
+      }
 
       pos.setY(i, y);
     }
@@ -843,6 +865,9 @@
 
     // Overhead Sprinkler Irrigation pipe
     buildSprinklerModel();
+
+    // Rooftop Farming Building
+    buildRooftopFarmModel();
   }
 
   // Helper: Farmland Fields Layout
@@ -1305,6 +1330,216 @@
     sprinklerGroup.add(targetSprinkler);
   }
 
+  // Helper: Rooftop Farming Building
+  function buildRooftopFarmModel() {
+    const roofGroup = new THREE.Group();
+    roofGroup.position.set(8.5, 0, 9.5);
+    roofGroup.rotation.y = -Math.PI / 6;
+    farmlandGroup.add(roofGroup);
+
+    // Main building block (multi-story processing facility)
+    const buildingGeo = new THREE.BoxGeometry(4.2, 2.6, 3.4);
+    const buildingMat = new THREE.MeshStandardMaterial({ color: 0xd9d2c4, roughness: 0.75, metalness: 0.1 });
+    buildingMat.userData = { isBarnBody: true }; // tie into theme color updates loosely
+    const building = new THREE.Mesh(buildingGeo, buildingMat);
+    building.position.y = 1.3;
+    building.castShadow = true;
+    building.receiveShadow = true;
+    roofGroup.add(building);
+
+    // Window strip bands for visual interest
+    const windowMat = new THREE.MeshStandardMaterial({ color: 0x8fb8c9, metalness: 0.6, roughness: 0.2 });
+    for (let f = 0; f < 3; f++) {
+      const band = new THREE.Mesh(new THREE.BoxGeometry(4.22, 0.25, 3.42), windowMat);
+      band.position.y = 0.5 + f * 0.75;
+      roofGroup.add(band);
+    }
+
+    // Rooftop slab (flat roof deck sitting atop the building)
+    const slabGeo = new THREE.BoxGeometry(4.4, 0.12, 3.6);
+    const slabMat = new THREE.MeshStandardMaterial({ color: 0x555a5e, roughness: 0.8, metalness: 0.2 });
+    const slab = new THREE.Mesh(slabGeo, slabMat);
+    slab.position.y = 2.66;
+    slab.castShadow = true;
+    slab.receiveShadow = true;
+    roofGroup.add(slab);
+
+    // Roof access housing (small box where stairs/elevator emerge)
+    const hatchGeo = new THREE.BoxGeometry(0.7, 0.6, 0.7);
+    const hatchMat = new THREE.MeshStandardMaterial({ color: 0x777777, roughness: 0.6, metalness: 0.3 });
+    const hatch = new THREE.Mesh(hatchGeo, hatchMat);
+    hatch.position.set(-1.6, 3.02, -1.2);
+    hatch.castShadow = true;
+    roofGroup.add(hatch);
+
+    // ─── Rooftop Planter Rows ───
+    const plantersGroup = new THREE.Group();
+    plantersGroup.position.y = 2.72;
+    roofGroup.add(plantersGroup);
+
+    const plantRowZCoords = [-1.1, -0.35, 0.4, 1.15];
+    const plantBoxGeo = new THREE.BoxGeometry(3.4, 0.22, 0.55);
+    const plantBoxMat = new THREE.MeshStandardMaterial({ color: 0x6d4c41, roughness: 0.85 });
+    const soilCapGeo = new THREE.BoxGeometry(3.3, 0.05, 0.48);
+    const soilCapMat = new THREE.MeshStandardMaterial({ color: 0x3e2b22, roughness: 0.95 });
+
+    plantRowZCoords.forEach((z, rowIdx) => {
+      const planterBox = new THREE.Mesh(plantBoxGeo, plantBoxMat);
+      planterBox.position.set(0.4, 0.11, z);
+      planterBox.castShadow = true;
+      planterBox.receiveShadow = true;
+      plantersGroup.add(planterBox);
+
+      const soilCap = new THREE.Mesh(soilCapGeo, soilCapMat);
+      soilCap.position.set(0.4, 0.225, z);
+      plantersGroup.add(soilCap);
+
+      // Rows of small leafy crop tufts that sway in the breeze
+      const tuftCount = 9;
+      for (let t = 0; t < tuftCount; t++) {
+        const tx = 0.4 + (-1.55 + (t / (tuftCount - 1)) * 3.1);
+        const tuft = createRooftopCropTuft(rowIdx);
+        tuft.position.set(tx + (Math.random() - 0.5) * 0.06, 0.26, z);
+        tuft.userData.swayPhase = Math.random() * Math.PI * 2;
+        tuft.userData.swaySpeed = 0.0018 + Math.random() * 0.0012;
+        plantersGroup.add(tuft);
+        rooftopCrops.push(tuft);
+      }
+    });
+
+    // ─── Rooftop Ventilation Fans ───
+    const fanPositions = [
+      { x: -1.6, z: 0.3 },
+      { x: 1.55, z: -1.3 },
+      { x: 1.55, z: 1.4 }
+    ];
+
+    fanPositions.forEach(pos => {
+      const fanUnit = new THREE.Group();
+      fanUnit.position.set(pos.x, 2.72, pos.z);
+      roofGroup.add(fanUnit);
+
+      // Fan housing ring
+      const housingGeo = new THREE.TorusGeometry(0.26, 0.05, 8, 16);
+      const housingMat = new THREE.MeshStandardMaterial({ color: 0xb0b6ba, metalness: 0.7, roughness: 0.3 });
+      const housing = new THREE.Mesh(housingGeo, housingMat);
+      housing.rotation.x = Math.PI / 2;
+      housing.castShadow = true;
+      fanUnit.add(housing);
+
+      // Base cylinder beneath fan
+      const baseGeo = new THREE.CylinderGeometry(0.27, 0.3, 0.18, 16);
+      const baseMatFan = new THREE.MeshStandardMaterial({ color: 0x44494d, metalness: 0.5, roughness: 0.5 });
+      const fanBase = new THREE.Mesh(baseGeo, baseMatFan);
+      fanBase.position.y = -0.1;
+      fanUnit.add(fanBase);
+
+      // Spinning blade hub
+      const bladeHub = new THREE.Group();
+      bladeHub.position.y = 0.01;
+      fanUnit.add(bladeHub);
+
+      const bladeGeo = new THREE.BoxGeometry(0.05, 0.02, 0.22);
+      bladeGeo.translate(0, 0, 0.11);
+      const bladeMat = new THREE.MeshStandardMaterial({ color: 0xe0e0e0, roughness: 0.4, metalness: 0.3 });
+
+      for (let b = 0; b < 4; b++) {
+        const blade = new THREE.Mesh(bladeGeo, bladeMat);
+        blade.rotation.y = b * (Math.PI / 2);
+        bladeHub.add(blade);
+      }
+
+      const hubCap = new THREE.Mesh(
+        new THREE.SphereGeometry(0.04, 8, 8),
+        new THREE.MeshStandardMaterial({ color: 0x222222, metalness: 0.6 })
+      );
+      bladeHub.add(hubCap);
+
+      rooftopFans.push(bladeHub);
+    });
+
+    // ─── Rooftop Solar Panel Array ───
+    const solarGroup = new THREE.Group();
+    solarGroup.position.set(-1.2, 2.74, -1.95);
+    roofGroup.add(solarGroup);
+
+    const panelGeo = new THREE.BoxGeometry(0.9, 0.04, 1.4);
+    const panelMat = new THREE.MeshStandardMaterial({ color: 0x1c2b4a, metalness: 0.8, roughness: 0.15 });
+    for (let p = 0; p < 2; p++) {
+      const panel = new THREE.Mesh(panelGeo, panelMat);
+      panel.position.set(p * 1.0, 0.18, 0);
+      panel.rotation.x = -0.25;
+      panel.rotation.z = (Math.random() - 0.5) * 0.02;
+      panel.castShadow = true;
+      solarGroup.add(panel);
+
+      const standGeo = new THREE.BoxGeometry(0.06, 0.18, 0.06);
+      const standMat = new THREE.MeshStandardMaterial({ color: 0x555555, metalness: 0.6 });
+      const standBack = new THREE.Mesh(standGeo, standMat);
+      standBack.position.set(p * 1.0, 0.08, -0.6);
+      solarGroup.add(standBack);
+
+      const standFront = new THREE.Mesh(standGeo, standMat);
+      standFront.scale.y = 0.4;
+      standFront.position.set(p * 1.0, 0.0, 0.6);
+      solarGroup.add(standFront);
+    }
+
+    // ─── Low railing around roof edge ───
+    const railMat = new THREE.MeshStandardMaterial({ color: 0x999999, metalness: 0.6, roughness: 0.4 });
+    const railGeoLong = new THREE.BoxGeometry(4.4, 0.18, 0.04);
+    const railGeoShort = new THREE.BoxGeometry(0.04, 0.18, 3.6);
+
+    const railFront = new THREE.Mesh(railGeoLong, railMat);
+    railFront.position.set(0, 2.81, 1.8);
+    roofGroup.add(railFront);
+
+    const railBack = new THREE.Mesh(railGeoLong, railMat);
+    railBack.position.set(0, 2.81, -1.8);
+    roofGroup.add(railBack);
+
+    const railLeft = new THREE.Mesh(railGeoShort, railMat);
+    railLeft.position.set(-2.2, 2.81, 0);
+    roofGroup.add(railLeft);
+
+    const railRight = new THREE.Mesh(railGeoShort, railMat);
+    railRight.position.set(2.2, 2.81, 0);
+    roofGroup.add(railRight);
+
+    // Interactive target box for Rooftop Farm
+    const targetRoof = new THREE.Mesh(
+      new THREE.BoxGeometry(4.6, 4.0, 3.8),
+      new THREE.MeshBasicMaterial({ visible: false })
+    );
+    targetRoof.position.set(0, 1.6, 0);
+    targetRoof.userData = { cropIndex: 6, isClickTarget: true };
+    roofGroup.add(targetRoof);
+  }
+
+  // Helper: Small leafy crop tuft for rooftop planters
+  function createRooftopCropTuft(rowIdx) {
+    const tuftGroup = new THREE.Group();
+
+    // Alternate crop colors per row for variety (greens / reds / purples)
+    const leafColors = [0x4caf50, 0x66bb6a, 0xa5d6a7, 0x8e6bbf];
+    const baseColor = leafColors[rowIdx % leafColors.length];
+
+    const leafGeo = new THREE.DodecahedronGeometry(0.05, 0);
+    const leafMat = new THREE.MeshLambertMaterial({ color: baseColor, flatShading: true });
+    leafMat.userData = { isRoofGreenery: true };
+
+    const blobCount = 3;
+    for (let i = 0; i < blobCount; i++) {
+      const blob = new THREE.Mesh(leafGeo, leafMat);
+      const angle = (i / blobCount) * Math.PI * 2;
+      blob.position.set(Math.cos(angle) * 0.035, 0.04 + Math.random() * 0.01, Math.sin(angle) * 0.035);
+      blob.scale.setScalar(0.8 + Math.random() * 0.35);
+      tuftGroup.add(blob);
+    }
+
+    return tuftGroup;
+  }
+
   // ─── Procedural Mesh Elements (For Biodome) ───
 
   function createLeafGeometry(radius, length) {
@@ -1741,6 +1976,9 @@
       } else if (index === 5) { // Irrigation
         selectionHighlight.position.set(4.5, 1.25, 0);
         selectionHighlight.scale.set(0.8, 3.5, 1.3);
+      } else if (index === 6) { // Rooftop Farm
+        selectionHighlight.position.set(8.5, 2.9, 9.5);
+        selectionHighlight.scale.set(2.3, 0.5, 1.9);
       }
       gsapPivotTarget(selectionHighlight.position.x, selectionHighlight.position.y, selectionHighlight.position.z);
     }
@@ -1914,6 +2152,20 @@
           }, 60 + Math.random() * 80);
         }
       }
+
+      // 6. Spin rooftop ventilation fans
+      rooftopFans.forEach((fanHub, idx) => {
+        fanHub.rotation.y += 0.12 + idx * 0.03;
+      });
+
+      // 7. Sway rooftop crop tufts in the breeze
+      rooftopCrops.forEach((tuft) => {
+        const phase = tuft.userData.swayPhase || 0;
+        const speed = tuft.userData.swaySpeed || 0.002;
+        const sway = Math.sin(time * speed + phase) * 0.12;
+        tuft.rotation.z = sway;
+        tuft.rotation.x = sway * 0.5;
+      });
     }
 
     // Render Frame

@@ -1128,6 +1128,71 @@ The user is currently visiting the page: ${currentPage}. Keep it relevant.`;
 
   // Initialize the AI chatbot widget
   initAIChat();
+  /* ══════════════════════════════════════
+  17. CUSTOM CURSOR WITH COLOR TRAIL
+══════════════════════════════════════ */
+function initCustomCursor() {
+  const cursor = document.createElement('div');
+  cursor.id = 'custom-cursor';
+  document.body.appendChild(cursor);
+
+  // Pull colors from the current theme's CSS variables
+  function getThemeColors() {
+    const style = getComputedStyle(document.documentElement);
+    return [
+      style.getPropertyValue('--accent').trim(),
+      style.getPropertyValue('--accent-light').trim(),
+      style.getPropertyValue('--green-400').trim(),
+      style.getPropertyValue('--green-200').trim(),
+      '#ffffff',
+    ].filter(Boolean);
+  }
+
+  let colors = getThemeColors();
+  let colorIndex = 0;
+
+  // Re-pull colors whenever the theme changes
+  const themeObserver = new MutationObserver(() => {
+    colors = getThemeColors();
+  });
+  themeObserver.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['data-theme']
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top  = e.clientY + 'px';
+
+    colorIndex = (colorIndex + 1) % colors.length;
+    const color = colors[colorIndex];
+    cursor.style.backgroundColor = color;
+
+    // Spawn trail dot
+    const dot = document.createElement('div');
+    dot.className = 'cursor-trail';
+    dot.style.left = e.clientX + 'px';
+    dot.style.top  = e.clientY + 'px';
+    dot.style.backgroundColor = color;
+    document.body.appendChild(dot);
+
+    setTimeout(() => dot.remove(), 500);
+  });
+
+  // Slightly grow cursor on clickable elements
+  document.addEventListener('mouseover', (e) => {
+    if (e.target.closest('a, button, [role="button"], input, select, textarea')) {
+      cursor.style.transform = 'translate(-50%, -50%) scale(1.6)';
+    }
+  });
+  document.addEventListener('mouseout', (e) => {
+    if (e.target.closest('a, button, [role="button"], input, select, textarea')) {
+      cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+    }
+  });
+}
+
+initCustomCursor();
 
 })();
 //this is peak
